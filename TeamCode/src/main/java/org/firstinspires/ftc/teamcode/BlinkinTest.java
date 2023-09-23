@@ -78,6 +78,7 @@ public class BlinkinTest extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+
             if (gamepad1.y && !previousY) {
                 pattern = RevBlinkinLedDriver.BlinkinPattern.GOLD;
                 blinkinLedDriver.setPattern(pattern);

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Tests.MainBot;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,28 +16,27 @@ public class ColorSensorTest extends LinearOpMode {
         int red = colorSensorV3.red();
         int blue = colorSensorV3.blue();
         int green = colorSensorV3.green();
+
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
             red = colorSensorV3.red();
             blue = colorSensorV3.blue();
             green = colorSensorV3.green();
-            telemetry.addData("Red", red);
-            telemetry.addData("Green", green);
-            telemetry.addData("Blue", blue);
-            telemetry.addData("Alpha", colorSensorV3.alpha());
+
             telemetry.update();
 
-            if (red > blue && red > green) {
-                telemetry.addData("Zone 3- Red", red);
-            }
-            if(blue > red && blue > green) {
-                telemetry.addData("Zone 2- Blue", blue);
-            }
-            if(green > red && green > blue) {
-                telemetry.addData("Zone 1- Green", green);
+            if (red == 0 && blue == 0 && green == 0) {
+                telemetry.addData("isPurple", "Yes");
             }
 
+            if (red == 1 && blue == 1 && green == 1) {
+                telemetry.addData("isGreen", "Yes");
+            }
+
+            if (red == 2 && blue == 2 && green == 2) {
+                telemetry.addData("isYellow", "Yes");
+            }
 
         }
     }
