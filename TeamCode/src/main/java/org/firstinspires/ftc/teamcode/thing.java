@@ -14,14 +14,9 @@ public class thing extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
-            if (gamepad1.a && !previousA) {
+            while (gamepad1.a) {
                 main.setPower(1);
-                sleep(2000);
-                main.setPower(0);
-
             }
-            previousA = gamepad1.a;
-
         }
 
     }
