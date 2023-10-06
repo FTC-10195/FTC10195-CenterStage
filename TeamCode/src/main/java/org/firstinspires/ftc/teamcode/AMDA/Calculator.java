@@ -49,8 +49,12 @@ public class Calculator extends LinearOpMode {
         printMoves(possibleMoves);
 
         long after = System.nanoTime();
-
         telemetry.addLine("\nThis took " + (after - before) / 1.0E9 + " seconds to run.");
+        telemetry.update();
+
+        while (opModeIsActive()) {
+            idle();
+        }
     }
 
     static ArrayList<Location> findPossibleMoves(int[][] board) {
@@ -295,4 +299,5 @@ public class Calculator extends LinearOpMode {
 
         return count;
     }
+
 }
