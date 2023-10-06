@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
+
 
 @TeleOp
 public class Drive_Train extends LinearOpMode {
@@ -20,20 +20,6 @@ public class Drive_Train extends LinearOpMode {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        DcMotor intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
-
-        DcMotor outtakeLinearSlideMotor1 = hardwareMap.dcMotor.get("outtakeLinearSlideMotor1");
-        DcMotor outtakeLinearSlideMotor2 = hardwareMap.dcMotor.get("outtakeLinearSlideMotor2");
-
-        Servo pixelHolderServo1 = hardwareMap.servo.get("pixelHolderServo1");
-        Servo pixelHolderServo2 = hardwareMap.servo.get("pixelHolderServo2");
-
-        Servo pixelDoorServo1 = hardwareMap.servo.get("pixelDoorServo1");
-        Servo pixelDoorServo2 = hardwareMap.servo.get("pixelDoorServo1");
-
-        Servo pixelOrientationServo1 = hardwareMap.servo.get("pixelDoorServo1"); //Horizontal?
-        Servo pixelOrientationServo2 = hardwareMap.servo.get("pixelDoorServo1"); //70 Degrees?
-
         waitForStart();
 
         if (isStopRequested()) return;
@@ -41,11 +27,13 @@ public class Drive_Train extends LinearOpMode {
         while(opModeIsActive()) {
 
             float leftStickYPosition = gamepad1.left_stick_y;
+            float leftStickXPosition = gamepad1.left_stick_x;
+            float rightStickXPosition = gamepad1.right_stick_x;
 
-            frontLeftMotor.setPower(leftStickYPosition);
-            frontRightMotor.setPower(leftStickYPosition);
-            backLeftMotor.setPower(leftStickYPosition);
-            backRightMotor.setPower(leftStickYPosition);
+            frontLeftMotor.setPower(leftStickXPosition + rightStickXPosition - leftStickYPosition);
+            frontRightMotor.setPower(leftStickXPosition - rightStickXPosition - leftStickYPosition);
+            backLeftMotor.setPower(leftStickXPosition + rightStickXPosition - leftStickYPosition);
+            backRightMotor.setPower(leftStickXPosition - rightStickXPosition - leftStickYPosition);
 
             }
 
