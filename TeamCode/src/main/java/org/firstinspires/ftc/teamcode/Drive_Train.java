@@ -26,14 +26,15 @@ public class Drive_Train extends LinearOpMode {
 
         while(opModeIsActive()) {
 
-            float leftStickYPosition = gamepad1.left_stick_y;
             float leftStickXPosition = gamepad1.left_stick_x;
             float rightStickXPosition = gamepad1.right_stick_x;
+            float leftStickYPosition = gamepad1.left_stick_y;
+            float scaler = Math.max(Math.abs(leftStickXPosition) + Math.abs(leftStickXPosition) + Math.abs(rightStickXPosition), 1);
 
-            frontLeftMotor.setPower(leftStickXPosition + rightStickXPosition - leftStickYPosition);
-            frontRightMotor.setPower(-leftStickXPosition - rightStickXPosition - leftStickYPosition);
-            backLeftMotor.setPower(-leftStickXPosition - rightStickXPosition - leftStickYPosition);
-            backRightMotor.setPower(leftStickXPosition - rightStickXPosition - leftStickYPosition);
+            frontLeftMotor.setPower((leftStickXPosition + rightStickXPosition - leftStickYPosition) / scaler);
+            frontRightMotor.setPower((-leftStickXPosition - rightStickXPosition - leftStickYPosition) / scaler);
+            backLeftMotor.setPower((-leftStickXPosition - rightStickXPosition - leftStickYPosition) / scaler);
+            backRightMotor.setPower((leftStickXPosition - rightStickXPosition - leftStickYPosition) / scaler);
 
             }
 
