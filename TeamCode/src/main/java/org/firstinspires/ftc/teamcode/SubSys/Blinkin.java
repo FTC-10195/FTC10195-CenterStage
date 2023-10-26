@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.SubSys;
 
+import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Blinkin {
+public class Blinkin extends SubsystemBase {
     public RevBlinkinLedDriver ledDriver;
     public Blinkin(HardwareMap hwmap) {
+
         ledDriver = hwmap.get(RevBlinkinLedDriver.class, "led");
     }
 
