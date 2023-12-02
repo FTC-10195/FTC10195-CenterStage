@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Mock_Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-
 @TeleOp
-public class Drive_Train extends LinearOpMode {
+public abstract class Practice_Drive_Train extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -36,19 +35,7 @@ public class Drive_Train extends LinearOpMode {
             backLeftMotor.setPower((-leftStickXPosition - rightStickXPosition - leftStickYPosition) / scaler);
             backRightMotor.setPower((leftStickXPosition - rightStickXPosition - leftStickYPosition) / scaler);
 
-            }
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
     }
+}
+
