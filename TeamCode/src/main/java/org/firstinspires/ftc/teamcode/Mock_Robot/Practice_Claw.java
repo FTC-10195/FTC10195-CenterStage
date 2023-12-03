@@ -12,6 +12,7 @@ public class Practice_Claw extends LinearOpMode {
 
     Servo clawServo = hardwareMap.servo.get("clawServo");
     boolean previoiusX = gamepad1.x;
+    int xButtonCounter = 1;
 
         waitForStart();
 
@@ -21,11 +22,17 @@ public class Practice_Claw extends LinearOpMode {
 
             if (gamepad1.x && !previoiusX) {
 
+                xButtonCounter++;
+
+            }
+
+            if (gamepad1.x && !previoiusX && (xButtonCounter % 2) == 0) {
+
                 clawServo.setPosition(1); //I'm pretty sure servos use -1 to 1
 
             }
 
-            if ((gamepad1.x && !previoiusX) && gamepad1.x) { //I don't know how to toggle button for the claw
+            if (gamepad1.x && !previoiusX && (xButtonCounter % 2) == 1) {
 
                 clawServo.setPosition(-1);
 
