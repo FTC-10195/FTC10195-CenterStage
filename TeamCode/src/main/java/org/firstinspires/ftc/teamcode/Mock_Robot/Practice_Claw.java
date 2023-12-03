@@ -11,8 +11,8 @@ public class Practice_Claw extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
     Servo clawServo = hardwareMap.servo.get("clawServo");
-    boolean previoiusX = gamepad1.x;
     int xButtonCounter = 0;
+    boolean previousX = false;
 
         waitForStart();
 
@@ -20,23 +20,25 @@ public class Practice_Claw extends LinearOpMode {
 
         while(opModeIsActive()) {
 
-            if (gamepad1.x && !previoiusX) {
+            if (gamepad1.x && !previousX) {
 
                 xButtonCounter++;
 
             }
 
-            if (gamepad1.x && !previoiusX && (xButtonCounter % 2) == 0) {
+            if (gamepad1.x && !previousX && (xButtonCounter % 2) == 1) {
 
-                clawServo.setPosition(1); //I'm pretty sure servos use -1 to 1
+                clawServo.setPosition(1);
+
+            }
+
+            if (gamepad1.x && !previousX && (xButtonCounter % 2) == 0) {
+
+                clawServo.setPosition(0);
 
             }
 
-            if (gamepad1.x && !previoiusX && (xButtonCounter % 2) == 1) {
-
-                clawServo.setPosition(-1);
-
-            }
+            previousX = gamepad1.x;
 
         }
     }
