@@ -12,7 +12,7 @@ public class Practice_Claw extends LinearOpMode {
 
     Servo clawServo = hardwareMap.servo.get("clawServo");
     boolean previoiusX = gamepad1.x;
-    int xButtonCounter = 1;
+    int xButtonCounter = 0;
 
         waitForStart();
 
