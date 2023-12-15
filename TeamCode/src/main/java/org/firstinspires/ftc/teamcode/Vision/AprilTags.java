@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
+@Autonomous
 public class AprilTags extends OpMode {
     private AprilTagProcessor aprilTagProcessor;
     private VisionPortal visionPortal;
@@ -24,6 +26,10 @@ public class AprilTags extends OpMode {
     public void init_loop() {
         List <AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         StringBuilder idsFound = new StringBuilder();
+        double fieldLength = 144; //inches, change if necessary
+        double lowestRange = 1000; //finds apriltag closest to camera
+
+
         for (AprilTagDetection detection : currentDetections) {
             idsFound.append(detection.id);
 
@@ -40,7 +46,13 @@ public class AprilTags extends OpMode {
             idsFound.append(detection.ftcPose.elevation);
             
             idsFound.append(' ');
+
+            if (detection.ftcPose.range < lowestRange) {
+                lowestRange = detection.ftcPose.range;
+
+            }
         }
+
         telemetry.addData("April Tags", idsFound);
     }
 
