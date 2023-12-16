@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -47,9 +48,14 @@ public class AprilTags extends OpMode {
             
             idsFound.append(' ');
 
-            if (detection.ftcPose.range < lowestRange) {
-                lowestRange = detection.ftcPose.range;
-
+            if (detection.id == 5) {
+                double robotPositionX = 60.25 - detection.ftcPose.x;
+                double robotPositionY = -35.41 - detection.ftcPose.y;
+                double robotPositionZ = 4 - detection.ftcPose.z;
+                idsFound.append(robotPositionX);
+                idsFound.append(robotPositionY);
+                idsFound.append(robotPositionZ);
+                idsFound.append(' ');
             }
         }
 
