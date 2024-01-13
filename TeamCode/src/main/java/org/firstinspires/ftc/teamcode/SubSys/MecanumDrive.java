@@ -20,14 +20,14 @@ public class MecanumDrive implements Subsystem {
     DcMotor[] motors = {frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor};
     IMU imu;
     public MecanumDrive(HardwareMap hwmap) {
-        frontLeftMotor = hwmap.dcMotor.get("fl");
-        frontRightMotor = hwmap.dcMotor.get("fr");
-        backLeftMotor = hwmap.dcMotor.get("bl");
-        backRightMotor = hwmap.dcMotor.get("br");
+        motors[0] = hwmap.dcMotor.get("fl");
+        motors[1] = hwmap.dcMotor.get("fr");
+        motors[2] = hwmap.dcMotor.get("bl");
+        motors[3] = hwmap.dcMotor.get("br");
         imu = hwmap.get(IMU.class, "imu");
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motors[0].setDirection(DcMotorSimple.Direction.REVERSE);
        // backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
         for (DcMotor motor : motors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }

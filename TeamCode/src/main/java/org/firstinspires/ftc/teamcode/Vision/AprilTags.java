@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -18,7 +17,7 @@ public class AprilTags extends OpMode {
 
     @Override
     public void init() {
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "1");
+        WebcamName webcamName = hardwareMap.get(WebcamName.class, "0");
         aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
         visionPortal.resumeStreaming();

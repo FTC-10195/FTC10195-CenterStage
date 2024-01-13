@@ -10,12 +10,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slides implements Subsystem {
     DcMotorEx leftSlide;
     DcMotorEx rightSlide;
-    private double Kp;
-    private double Ki;
-    private double Kd;
-    private double integralSumMax;
-    private double stability_thresh;
-    private double lowPassGain;
+    private static double Kp;
+    private static double Ki;
+    private static double Kd;
+    private static double integralSumMax;
+    private static double stability_thresh;
+    private static double lowPassGain;
     private  boolean pid=  false;
     PIDCoefficientsEx coefficients = new PIDCoefficientsEx(Kp,Ki,Kd,integralSumMax,
             stability_thresh,
