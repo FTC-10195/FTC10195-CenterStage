@@ -27,12 +27,59 @@ public class AprilTags extends OpMode {
     public void init_loop() {
         List <AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         StringBuilder idsFound = new StringBuilder();
-        double fieldLength = 144; //inches, change if necessary
-        double lowestRange = 1000; //finds apriltag closest to camera
-
+        double absy = 0;
 
         for (AprilTagDetection detection : currentDetections) {
             idsFound.append("ID: " + detection.id + ";\n");
+            
+            idsFound.append(detection.ftcPose.x);
+            idsFound.append(System.getProperty("line.separator"));
+
+            idsFound.append(detection.ftcPose.y);
+            idsFound.append(System.getProperty("line.separator"));
+
+            idsFound.append(detection.ftcPose.z);
+            idsFound.append(System.getProperty("line.separator"));
+            /*idsFound.append(detection.ftcPose.pitch);
+            idsFound.append(detection.ftcPose.roll);
+            idsFound.append(detection.ftcPose.yaw); */
+
+            idsFound.append(detection.ftcPose.range);
+            idsFound.append(System.getProperty("line.separator"));
+            //idsFound.append(detection.ftcPose.bearing);
+            //idsFound.append(detection.ftcPose.elevation);
+
+            if (detection.id == 1) {
+                absy = 41.41;
+            }
+            else if (detection.id == 2) {
+                absy = 35.41;
+            }
+            else if (detection.id == 3) {
+                absy = 29.41;
+            }
+            else if (detection.id == 4) {
+                absy = -29.41;
+            }
+            else if (detection.id == 5) {
+                absy = -35.41;
+            }
+            else if (detection.id == 6) {
+                absy = -41.41;
+            }
+
+            double robotPositionX = 60.25 - detection.ftcPose.x;
+            double robotPositionY = absy - detection.ftcPose.y;
+            double robotPositionZ = 4 - detection.ftcPose.z;
+
+            idsFound.append("X: " + robotPositionX);
+            idsFound.append(System.getProperty("line.separator"));
+
+            idsFound.append("Y: " + robotPositionY);
+            idsFound.append(System.getProperty("line.separator"));
+
+            idsFound.append("Z: " + robotPositionZ);
+            idsFound.append(System.getProperty("line.separator"));
 
             idsFound.append("X: " + detection.ftcPose.x + ";\n");
             idsFound.append("Y: " + detection.ftcPose.y + ";\n");
@@ -46,17 +93,9 @@ public class AprilTags extends OpMode {
             idsFound.append("Bearing: " + detection.ftcPose.bearing + ";\n");
             idsFound.append("Elevation: " + detection.ftcPose.elevation + ";\n");
             
+
             idsFound.append(' ');
 
-            if (detection.id == 5) {
-                double robotPositionX = 60.25 - detection.ftcPose.x;
-                double robotPositionY = -35.41 - detection.ftcPose.y;
-                double robotPositionZ = 4 - detection.ftcPose.z;
-                idsFound.append(robotPositionX);
-                idsFound.append(robotPositionY);
-                idsFound.append(robotPositionZ);
-                idsFound.append(' ');
-            }
         }
 
         telemetry.addData("April Tags", idsFound);
