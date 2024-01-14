@@ -28,4 +28,8 @@ public class Blinkin extends SubsystemBase {
 
     }
 
+    public void changeColor(RevBlinkinLedDriver.BlinkinPattern pattern) {
+        ledDriver.setPattern(pattern);
+    }
+
 }
