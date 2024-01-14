@@ -16,12 +16,10 @@ public class VisionTest extends LinearOpMode {
         VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), id);
 
         telemetry.clear();
-        waitForStart();
-        if(isStopRequested()) return;
-        while(opModeIsActive()) {
 
-            telemetry.addLine("E");
-            telemetry.update();
+        while(opModeInInit()) {
+            telemetry.addData("Zone", id.getSelection());
+\            telemetry.update();
 
         }
     }
