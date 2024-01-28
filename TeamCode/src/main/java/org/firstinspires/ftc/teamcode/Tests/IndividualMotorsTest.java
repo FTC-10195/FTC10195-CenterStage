@@ -20,7 +20,7 @@ public class IndividualMotorsTest extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("bl");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("br");
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+       // frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()) {
             telemetry.addLine("Press play to begin the debugging opmode");

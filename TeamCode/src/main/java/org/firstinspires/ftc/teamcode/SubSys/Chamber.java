@@ -27,7 +27,7 @@ public class Chamber implements Subsystem {
 
 
     public Chamber(HardwareMap hardwareMap) {
-        spinny = hardwareMap.get(DcMotorEx.class, "sp");
+        spinny = hardwareMap.get(DcMotorEx.class, "in");
         spinny.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         spinny.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bottomRoller = hardwareMap.get(CRServo.class, "roll");
@@ -38,7 +38,7 @@ public class Chamber implements Subsystem {
     }
 
     public void servoRoller(double power) {
-        bottomRoller.setPower(power);
+        bottomRoller.setPower(1);
     }
 
 

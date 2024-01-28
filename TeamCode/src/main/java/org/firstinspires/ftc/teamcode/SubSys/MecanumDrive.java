@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class MecanumDrive implements Subsystem {
@@ -16,23 +17,29 @@ public class MecanumDrive implements Subsystem {
     DcMotor frontRightMotor;
     DcMotor backLeftMotor;
     DcMotor backRightMotor;
+    Telemetry telemetry;
 
-    DcMotor[] motors = {frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor};
-    IMU imu;
-    public MecanumDrive(HardwareMap hwmap) {
-        motors[0] = hwmap.dcMotor.get("fl");
-        motors[1] = hwmap.dcMotor.get("fr");
-        motors[2] = hwmap.dcMotor.get("bl");
-        motors[3] = hwmap.dcMotor.get("br");
-        imu = hwmap.get(IMU.class, "imu");
-        motors[0].setDirection(DcMotorSimple.Direction.REVERSE);
-       // backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
-        for (DcMotor motor : motors) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
+
+    public MecanumDrive(HardwareMap hwmap, Telemetry telemetry) {
+        frontLeftMotor = hwmap.dcMotor.get("fl");
+        frontRightMotor = hwmap.dcMotor.get("fr");
+        backLeftMotor = hwmap.dcMotor.get("bl");
+        backRightMotor = hwmap.dcMotor.get("br");
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        this.telemetry = telemetry;
+
     }
     public void robotDrive(double y, double x, double rx) {
+
         //denominator is largest motor power to ensure power ratio between motors is mantained
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
@@ -46,29 +53,15 @@ public class MecanumDrive implements Subsystem {
         frontRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);
 
-    }
-    public void fieldDrive(double y, double x, double rx) {
-        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-        // Rotate the movement direction counter to the bot's rotation
-        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
-        rotX = rotX * 1.1;  // Counteract imperfect strafing
+        telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("BL", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR", backRightMotor.getCurrentPosition());
+        telemetry.addData("FR", frontRightMotor.getCurrentPosition());
+        telemetry.update();
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
-        double frontRightPower = (rotY - rotX - rx) / denominator;
-        double backRightPower = (rotY + rotX - rx) / denominator;
 
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
 
     }
 

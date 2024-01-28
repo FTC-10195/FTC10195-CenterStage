@@ -6,20 +6,22 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.SubSys.DropDown;
+
 @TeleOp
 public class DropDownTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotorEx motor;
-        motor = hardwareMap.get(DcMotorEx.class, "fl");
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        DropDown intake = new DropDown(hardwareMap);
 
         waitForStart();
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            motor.setPower(1);
+            intake.move(gamepad1.dpad_down, gamepad1.dpad_up);
+            intake.spin(gamepad1.a);
 
         }
     }

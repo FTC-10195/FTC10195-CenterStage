@@ -13,13 +13,13 @@ public class AxonSet extends LinearOpMode {
     Servo left;
     Servo right;
 
-    public static double le;
+    public static double le =.5;
     @Override
     public void runOpMode() throws InterruptedException {
 
-        left = hardwareMap.get(Servo.class, "leftDropOrange");
-        right = hardwareMap.get(Servo.class, "rightDrop");
-
+        left = hardwareMap.get(Servo.class, "la");
+        right = hardwareMap.get(Servo.class, "ra");
+        left.setDirection(Servo.Direction.REVERSE);
         waitForStart();
 
         if(isStopRequested()) return;
@@ -27,7 +27,7 @@ public class AxonSet extends LinearOpMode {
         while(opModeIsActive()) {
 
             left.setPosition(le);
-            right.setPosition(1-le);
+            right.setPosition(le);
 
         }
     }

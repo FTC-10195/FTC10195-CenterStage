@@ -33,7 +33,7 @@ public class Bucket implements Subsystem {
 
         lowerServo = hardwareMap.get(Servo.class, "lserv");
         upperServo = hardwareMap.get(Servo.class, "userv");
-        armServo = hardwareMap.get(ServoEx.class, "aserv");
+      //  armServo = hardwareMap.get(ServoEx.class, "aserv");
     }
 
     public void controlLights() {

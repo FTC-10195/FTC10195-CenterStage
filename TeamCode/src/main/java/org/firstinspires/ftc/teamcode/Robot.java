@@ -20,7 +20,6 @@ public class Robot {
         bucket = new Bucket(hardwareMap);
         chamber = new Chamber(hardwareMap);
         dropDown = new DropDown(hardwareMap);
-        mecanumDrive = new MecanumDrive(hardwareMap);
         slides = new Slides(hardwareMap);
 
     }

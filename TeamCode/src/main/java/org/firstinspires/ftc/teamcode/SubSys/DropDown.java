@@ -5,58 +5,54 @@ import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class DropDown implements Subsystem {
     DcMotorEx drop;
-    private static double Kp;
-    private static double Ki;
-    private  boolean pid=  false;
+    Servo left;
+    Servo right;
 
-    private static double Kd;
-    private static double integralSumMax;
-    private static double stability_thresh;
-    private static double lowPassGain;
-    PIDCoefficientsEx coefficients = new PIDCoefficientsEx(Kp,Ki,Kd,integralSumMax,
-            stability_thresh,
-            lowPassGain);
-    // usage of the PID
-    PIDEx controller = new PIDEx(coefficients);
+    double down = .075;
+    double up = .5;
 
-    public DropDown (HardwareMap hwmap) {
-        drop = hwmap.get(DcMotorEx.class, "drop");
+
+    public DropDown(HardwareMap hwmap) {
+        drop = hwmap.get(DcMotorEx.class, "spin");
+        left = hwmap.get(Servo.class, "ld");
+        right = hwmap.get(Servo.class, "rd");
+        left.setDirection(Servo.Direction.REVERSE);
         drop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         drop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        drop.setDirection(DcMotorSimple.Direction.REVERSE);
+        move(down);
     }
 
-    public void setHeight(int target) {
-        if (pid) {
-                drop.setPower(controller.calculate(target, drop.getCurrentPosition()));
+    private void move(double pos) {
+        left.setPosition(pos);
+        right.setPosition(pos);
+    }
 
+    public void move(boolean goDown, boolean goUp) {
+        if(goDown) {
+            move(down);
+        }
+        if(goUp) {
+            move(up);
+        }
+        }
 
+    public void spin(boolean spin) {
+
+        if(spin) {
+            drop.setPower(1);
+        }
+        else {
+            drop.setPower(0);
         }
     }
-
-    public void manualControl(boolean up, boolean down) {
-
-        if(!pid) {
-            if (up) {
-                    drop.setPower(1);
-
-            } else if (down) {
-
-                    drop.setPower(-1);
-
-
-            } else {
-                    drop.setPower(0);
-
-
-            }
-
-        }
     }
-    public void setPid(boolean set) {
-        pid = set;
-    }
-}
+
+
+

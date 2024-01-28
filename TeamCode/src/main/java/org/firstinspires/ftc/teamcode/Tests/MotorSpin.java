@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class MotorSpin extends LinearOpMode  {
 
-    public static String config = "fl";
+    public static String config = "in";
     @Override
     public void runOpMode() throws InterruptedException {
 
