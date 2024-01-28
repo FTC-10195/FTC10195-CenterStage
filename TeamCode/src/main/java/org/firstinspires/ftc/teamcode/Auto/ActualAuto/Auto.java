@@ -17,8 +17,6 @@ public class Auto extends LinearOpMode {
         STACK,
         BACKBOARD
     }
-
-
     Side side = Side.STACK;
 
 
