@@ -26,9 +26,9 @@ public class BucketTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Blinkin lights = new Blinkin(hardwareMap);
-        RevColorSensorV3 lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
-        RevColorSensorV3 upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
+     //   Blinkin lights = new Blinkin(hardwareMap);
+       // RevColorSensorV3 lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
+       // RevColorSensorV3 upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
 
         Servo lowerServo = hardwareMap.get(Servo.class, "lserv");
         Servo upperServo = hardwareMap.get(Servo.class, "userv");
@@ -48,18 +48,18 @@ public class BucketTest extends LinearOpMode {
             if (gamepad1.dpad_right) {
                 lowerServo.setPosition(lowerOut);
             }
-            if (gamepad1.dpad_left) {
+            else if (gamepad1.dpad_left) {
                 lowerServo.setPosition(lowerIn);
             }
-            if (gamepad1.dpad_up) {
+           else  if (gamepad1.dpad_up) {
                 upperServo.setPosition(upperOut);
             }
-            if (gamepad1.dpad_down) {
+            else if (gamepad1.dpad_down) {
                 upperServo.setPosition(upperIn);
             }
 
             // Read color and distance values for lower sensor
-            int lowerRed = lowerSensor.red();
+        /*    int lowerRed = lowerSensor.red();
             int lowerBlue = lowerSensor.blue();
             int lowerGreen = lowerSensor.green();
             int lowerAlpha = lowerSensor.alpha();
@@ -110,7 +110,7 @@ public class BucketTest extends LinearOpMode {
 
 
             telemetry.update();
-
+*/
         }
     }
 }

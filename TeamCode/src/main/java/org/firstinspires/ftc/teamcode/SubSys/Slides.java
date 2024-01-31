@@ -45,19 +45,17 @@ public class Slides implements Subsystem {
 
     public void manualControl(boolean up, boolean down) {
         if(up) {
-            if (rightSlide.getCurrentPosition() < 2600) {
+         //   if (rightSlide.getCurrentPosition() < 2600) {
                 rightSlide.setPower(1);
-            } else if (rightSlide.getCurrentPosition() > 2600) {
-                rightSlide.setPower(1);
-            }
-            if (leftSlide.getCurrentPosition() < 2150) {
+        //    } else if (rightSlide.getCurrentPosition() > 2600) {
                 leftSlide.setPower(1);
+         //   }
+        //    if (leftSlide.getCurrentPosition() < 2150) {
+              //  leftSlide.setPower(1);
             }
-            else if (leftSlide.getCurrentPosition() > 2150) {
-                rightSlide.setPower(0);
-            }
-        }
-            else if(down) {
+          //  else if (leftSlide.getCurrentPosition() > 2150) {
+
+          else if(down) {
                 rightSlide.setPower(-1);
                 leftSlide.setPower(-1);
 
