@@ -11,11 +11,12 @@ import org.firstinspires.ftc.teamcode.SubSys.Slides;
 
 public class Robot {
 
-    private Bucket bucket;
-    private Chamber chamber;
-    private DropDown dropDown;
+    private final Bucket bucket;
+    private final Chamber chamber;
+    private final DropDown dropDown;
     private MecanumDrive mecanumDrive;
-    private Slides slides;
+    private final Slides slides;
+
     public Robot(HardwareMap hardwareMap) {
         bucket = new Bucket(hardwareMap);
         chamber = new Chamber(hardwareMap);
@@ -23,6 +24,7 @@ public class Robot {
         slides = new Slides(hardwareMap);
 
     }
+
     public enum Color {
         BLUE,
         RED
@@ -31,7 +33,7 @@ public class Robot {
     Color color = Color.BLUE;
 
     public void setColor(int col) {
-        switch(col) {
+        switch (col) {
             case 0:
                 color = Color.BLUE;
                 break;
@@ -44,8 +46,6 @@ public class Robot {
     public String getColor() {
         return color.toString();
     }
-
-
 
 
 }

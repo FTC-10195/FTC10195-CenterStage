@@ -16,21 +16,29 @@ public class SimpleBucket implements Subsystem {
     double upperOut = .2;
 
     public SimpleBucket(HardwareMap hardwareMap) {
-        lowerServo =   hardwareMap.get(Servo.class, "lserv");
+        lowerServo = hardwareMap.get(Servo.class, "lserv");
         upperServo = hardwareMap.get(Servo.class, "userv");
     }
 
 
     public void intakeMode() {
-        lowerServo.setPosition(lowerOut);
+       lowerServo.setPosition(lowerOut);
         upperServo.setPosition(upperOut);
+    }
+
+    public void manualMove(double pos) {
+        lowerServo.setPosition(pos);
+        upperServo.setPosition(pos);
+
     }
 
     public void outtakeUpper() {
         upperServo.setPosition(upperIn);
     }
-    public void outtakeLower() {lowerServo.setPosition(lowerIn);}
 
+    public void outtakeLower() {
+        lowerServo.setPosition(lowerIn);
+    }
 
 
 }

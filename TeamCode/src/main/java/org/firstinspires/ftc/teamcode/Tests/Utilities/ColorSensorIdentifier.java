@@ -3,10 +3,9 @@ package org.firstinspires.ftc.teamcode.Tests.Utilities;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@TeleOp(group = "Tests" )
+@TeleOp(group = "Tests")
 public class ColorSensorIdentifier extends LinearOpMode {
     RevColorSensorV3 colorSensorV3;
 
@@ -28,8 +27,8 @@ public class ColorSensorIdentifier extends LinearOpMode {
             telemetry.addData("Alpha", colorSensorV3.alpha());
             telemetry.update();
 
-            }
-
-
         }
+
+
+    }
 }

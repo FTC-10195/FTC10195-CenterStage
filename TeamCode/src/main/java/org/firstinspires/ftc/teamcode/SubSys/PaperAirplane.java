@@ -8,14 +8,14 @@ public class PaperAirplane {
     Servo plane;
 
     double shootPos = 0;
+
     public PaperAirplane(HardwareMap hardwareMap) {
-        plane = hardwareMap.get(Servo.class,"pA");
+        plane = hardwareMap.get(Servo.class, "pA");
     }
 
     public void setPostion(double position) {
         plane.setPosition(position);
     }
-
 
 
 }

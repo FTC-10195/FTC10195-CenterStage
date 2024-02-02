@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.AMDA;
 
 public class PixelColor {
-    public enum Color{
+    public enum Color {
         WHITE,
         YELLOW,
         PURPLE,
@@ -10,14 +10,14 @@ public class PixelColor {
 
     Color pixelColor;
 
-    public PixelColor(int i){
-        switch(i) {
+    public PixelColor(int i) {
+        switch (i) {
             case 1:
                 pixelColor = Color.WHITE;
-            break;
+                break;
             case 2:
                 pixelColor = Color.YELLOW;
-            break;
+                break;
             case 3:
                 pixelColor = Color.PURPLE;
                 break;

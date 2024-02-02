@@ -1,26 +1,27 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@Autonomous(name = "TestingVisionTest")
-public class TestingVisionTest extends LinearOpMode {
+@TeleOp
+public class StackVisionTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        LocationID id = new LocationID();
+        StackTest stack = new StackTest();
 
-        VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), id);
+        VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), stack);
 
         telemetry.clear();
 
         while (opModeInInit()) {
-            telemetry.addData("Zone", id.getSelection());
+            telemetry.addData("Zone", stack.getSelection());
             telemetry.update();
 
         }
     }
+
 }

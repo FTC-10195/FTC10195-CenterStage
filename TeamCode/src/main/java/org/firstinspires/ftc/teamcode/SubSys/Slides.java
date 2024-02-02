@@ -17,8 +17,8 @@ public class Slides implements Subsystem {
     private static double integralSumMax;
     private static double stability_thresh;
     private static double lowPassGain;
-    private  boolean pid=  false;
-    PIDCoefficientsEx coefficients = new PIDCoefficientsEx(Kp,Ki,Kd,integralSumMax,
+    private boolean pid = false;
+    PIDCoefficientsEx coefficients = new PIDCoefficientsEx(Kp, Ki, Kd, integralSumMax,
             stability_thresh,
             lowPassGain);
     // usage of the PID
@@ -40,31 +40,31 @@ public class Slides implements Subsystem {
             leftSlide.setPower(controller.calculate(target, leftSlide.getCurrentPosition()));
             rightSlide.setPower(controller.calculate(target, rightSlide.getCurrentPosition()));
         }
-        }
+    }
 
 
     public void manualControl(boolean up, boolean down) {
-        if(up) {
-         //   if (rightSlide.getCurrentPosition() < 2600) {
-                rightSlide.setPower(1);
-        //    } else if (rightSlide.getCurrentPosition() > 2600) {
-                leftSlide.setPower(1);
-         //   }
-        //    if (leftSlide.getCurrentPosition() < 2150) {
-              //  leftSlide.setPower(1);
-            }
-          //  else if (leftSlide.getCurrentPosition() > 2150) {
+        if (up) {
+            //   if (rightSlide.getCurrentPosition() < 2600) {
+            rightSlide.setPower(1);
+            //    } else if (rightSlide.getCurrentPosition() > 2600) {
+            leftSlide.setPower(1);
+            //   }
+            //    if (leftSlide.getCurrentPosition() < 2150) {
+            //  leftSlide.setPower(1);
+        }
+        //  else if (leftSlide.getCurrentPosition() > 2150) {
 
-          else if(down) {
-                rightSlide.setPower(-1);
-                leftSlide.setPower(-1);
+        else if (down) {
+            rightSlide.setPower(-1);
+            leftSlide.setPower(-1);
 
-            }
-            else {
-                rightSlide.setPower(0);
-                leftSlide.setPower(0);
-            }
+        } else {
+            rightSlide.setPower(0);
+            leftSlide.setPower(0);
+        }
     }
+
     public void setPid(boolean set) {
         pid = set;
     }

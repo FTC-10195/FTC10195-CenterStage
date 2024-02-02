@@ -11,9 +11,12 @@ import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSys.SimpleBucket;
 import org.firstinspires.ftc.teamcode.SubSys.Slides;
 
-@TeleOp(group = "Match")
+@TeleOp(group = "Matches")
 @Config
-public class MIT extends LinearOpMode {
+public class UNC extends LinearOpMode {
+    public static double bucketPos = 0;
+    public static double dropPos = 0;
+    public static double bucketServoPos = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,6 +26,7 @@ public class MIT extends LinearOpMode {
         Chamber ber = new Chamber(hardwareMap);
         SimpleBucket bucket = new SimpleBucket(hardwareMap);
         Arm arm = new Arm(hardwareMap);
+        //Declare motors
 
         waitForStart();
 
@@ -31,10 +35,12 @@ public class MIT extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            drive.robotDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            slides.manualControl(gamepad2.dpad_up, gamepad2.dpad_down);
+            drive.robotDrive(gamepad2.left_stick_y, gamepad2.left_stick_x, gamepad2.right_stick_x);
+            // slides.manualControl( gamepad1.right_trigger > .01, gamepad1.left_trigger > .01);
+
+            slides.manualControl(gamepad1.dpad_up, gamepad1.dpad_down);
             intake.move(gamepad1.dpad_left, gamepad1.dpad_right);
-            intake.spin(gamepad1.a, gamepad1.b, gamepad1.y);
+            intake.spin(gamepad1.a);
 
 
             //intake.manualMove(dropPos);
@@ -45,25 +51,25 @@ public class MIT extends LinearOpMode {
             } else if (gamepad1.left_trigger > .01) {
                 ber.motorsPIN(-gamepad1.left_trigger);
                 ber.servoRoller(-gamepad1.left_trigger);
-            }
-            else {
 
-                ber.motorsPIN(0);
-                ber.servoRoller(0);
 
             }
 
-            if (gamepad2.dpad_left) {
+           // arm.rotate(bucketPos);
+          //  telemetry.addData("Trigger", gamepad1.right_trigger);
+         //   telemetry.update();
+
+            if (gamepad1.left_bumper) {
                 arm.rotate(0);
-            } else if (gamepad2.dpad_right) {
-                arm.rotate(.06);
+            } else if (gamepad1.right_bumper) {
+                arm.rotate(.70);
             }
 
-            if (gamepad2.a) {
+            if (gamepad1.left_stick_button) {
                 bucket.manualMove(0);
 
-            } else if (gamepad2.b) {
-                bucket.manualMove(.7);
+            } else if (gamepad1.right_stick_button) {
+                bucket.manualMove(.06);
 
             }
 

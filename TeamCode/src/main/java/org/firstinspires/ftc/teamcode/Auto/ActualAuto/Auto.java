@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Auto.ActualAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Vision.LocationID;
@@ -13,10 +12,12 @@ public class Auto extends LinearOpMode {
     private LocationID locationID;
 
     Robot bot = new Robot(hardwareMap);
+
     private enum Side {
         STACK,
         BACKBOARD
     }
+
     Side side = Side.STACK;
 
 
@@ -25,23 +26,21 @@ public class Auto extends LinearOpMode {
 
         waitForStart();
 
-        while(opModeInInit()) {
+        while (opModeInInit()) {
 
             telemetry.addLine("D-pad up for blue, d-pad down for red");
 
-            if(gamepad1.dpad_up) {
+            if (gamepad1.dpad_up) {
                 bot.setColor(0);
-            }
-            else if(gamepad1.dpad_down) {
+            } else if (gamepad1.dpad_down) {
                 bot.setColor(1);
             }
             telemetry.addData("Current Config", bot.getColor());
 
             telemetry.addLine("D-pad left for stack, d-pad right for backboard");
-            if(gamepad1.dpad_left) {
+            if (gamepad1.dpad_left) {
                 side = Side.STACK;
-            }
-            else if(gamepad1.dpad_right) {
+            } else if (gamepad1.dpad_right) {
                 side = Side.BACKBOARD;
             }
             telemetry.addData("Current Config", side);
@@ -51,7 +50,7 @@ public class Auto extends LinearOpMode {
         }
         if (isStopRequested()) return;
 
-        while(opModeIsActive()) {
+        while (opModeIsActive()) {
 
 
         }

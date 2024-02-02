@@ -17,7 +17,7 @@ public class VisionTest extends LinearOpMode {
 
         telemetry.clear();
 
-        while(opModeInInit()) {
+        while (opModeInInit()) {
             telemetry.addData("Zone", id.getSelection());
             telemetry.update();
 

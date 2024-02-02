@@ -6,9 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class MotorSpin extends LinearOpMode  {
+public class MotorSpin extends LinearOpMode {
 
     public static String config = "in";
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -17,9 +18,9 @@ public class MotorSpin extends LinearOpMode  {
         spin.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
 
-        if(isStopRequested()) return;
+        if (isStopRequested()) return;
 
-        while(opModeIsActive()) {
+        while (opModeIsActive()) {
 
             spin.setPower(1);
 

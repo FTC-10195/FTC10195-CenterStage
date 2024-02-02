@@ -25,13 +25,13 @@ public class AprilTags extends OpMode {
 
     @Override
     public void init_loop() {
-        List <AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         StringBuilder idsFound = new StringBuilder();
         double absy = 0;
 
         for (AprilTagDetection detection : currentDetections) {
             idsFound.append("ID: " + detection.id + ";\n");
-            
+
             idsFound.append(detection.ftcPose.x);
             idsFound.append(System.getProperty("line.separator"));
 
@@ -51,20 +51,15 @@ public class AprilTags extends OpMode {
 
             if (detection.id == 1) {
                 absy = 41.41;
-            }
-            else if (detection.id == 2) {
+            } else if (detection.id == 2) {
                 absy = 35.41;
-            }
-            else if (detection.id == 3) {
+            } else if (detection.id == 3) {
                 absy = 29.41;
-            }
-            else if (detection.id == 4) {
+            } else if (detection.id == 4) {
                 absy = -29.41;
-            }
-            else if (detection.id == 5) {
+            } else if (detection.id == 5) {
                 absy = -35.41;
-            }
-            else if (detection.id == 6) {
+            } else if (detection.id == 6) {
                 absy = -41.41;
             }
 
@@ -92,7 +87,7 @@ public class AprilTags extends OpMode {
             idsFound.append("Range: " + detection.ftcPose.range + ";\n");
             idsFound.append("Bearing: " + detection.ftcPose.bearing + ";\n");
             idsFound.append("Elevation: " + detection.ftcPose.elevation + ";\n");
-            
+
 
             idsFound.append(' ');
 

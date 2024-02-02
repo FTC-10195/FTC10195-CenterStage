@@ -1,16 +1,11 @@
 package org.firstinspires.ftc.teamcode.SubSys;
 
 import com.arcrobotics.ftclib.command.Subsystem;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class MecanumDrive implements Subsystem {
     DcMotor frontLeftMotor;
@@ -38,6 +33,7 @@ public class MecanumDrive implements Subsystem {
         this.telemetry = telemetry;
 
     }
+
     public void robotDrive(double y, double x, double rx) {
 
         //denominator is largest motor power to ensure power ratio between motors is mantained
@@ -45,7 +41,7 @@ public class MecanumDrive implements Subsystem {
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x -rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
 
         //set motor power values
         frontLeftMotor.setPower(frontLeftPower);
@@ -54,14 +50,14 @@ public class MecanumDrive implements Subsystem {
         backRightMotor.setPower(backRightPower);
 
 
-
         telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
         telemetry.addData("BL", backLeftMotor.getCurrentPosition());
         telemetry.addData("BR", backRightMotor.getCurrentPosition());
         telemetry.addData("FR", frontRightMotor.getCurrentPosition());
         telemetry.update();
     }
-    public  void forward(int distance) {
+
+    public void forward(int distance) {
 //reset encoder, go forward x amount of ticks at .1 speed
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,7 +80,8 @@ public class MecanumDrive implements Subsystem {
         frontLeftMotor.setPower(.1);
 
         //while loop exists so that the program does not stop the motors while the motors are still running, blocking code
-        while(backLeftMotor.isBusy() || backRightMotor.isBusy() || frontLeftMotor.isBusy() || frontRightMotor.isBusy()){}
+        while (backLeftMotor.isBusy() || backRightMotor.isBusy() || frontLeftMotor.isBusy() || frontRightMotor.isBusy()) {
+        }
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
@@ -92,6 +89,7 @@ public class MecanumDrive implements Subsystem {
 
 
     }
+
     //literally same as before, just add some negatives bc of mecanum equations
     public void strafeRight(int distance) {
 
@@ -119,7 +117,8 @@ public class MecanumDrive implements Subsystem {
         backLeftMotor.setPower(.1);
         frontRightMotor.setPower(.1);
         frontLeftMotor.setPower(.1);
-        while(backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()){}
+        while (backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()) {
+        }
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
@@ -151,7 +150,8 @@ public class MecanumDrive implements Subsystem {
         frontRightMotor.setPower(1);
         frontLeftMotor.setPower(1);
 
-        while(backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()){}
+        while (backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()) {
+        }
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);

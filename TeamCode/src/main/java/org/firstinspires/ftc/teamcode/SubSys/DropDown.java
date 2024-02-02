@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.SubSys;
 
-import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
-import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,8 +12,10 @@ public class DropDown implements Subsystem {
     Servo left;
     Servo right;
 
-    double down = .075;
+    double down = .05;
     double up = .5;
+
+    int clicks = 0;
 
 
     public DropDown(HardwareMap hwmap) {
@@ -34,25 +34,36 @@ public class DropDown implements Subsystem {
         right.setPosition(pos);
     }
 
+    public void manualMove(double pos) {
+        left.setPosition(pos);
+        right.setPosition(pos);
+
+    }
+
     public void move(boolean goDown, boolean goUp) {
-        if(goDown) {
+        if (goDown) {
             move(down);
         }
-        if(goUp) {
+        if (goUp) {
             move(up);
         }
-        }
+    }
 
-    public void spin(boolean spin) {
-
-        if(spin) {
+    public void spin(boolean on, boolean off,boolean reverse) {
+        if(on) {
             drop.setPower(1);
         }
-        else {
-            drop.setPower(0);
+            else if(reverse) {
+                drop.setPower(-1);
+        }
+
+            else if(off) {
+                    drop.setPower(0);
         }
     }
+
     }
+
 
 
 

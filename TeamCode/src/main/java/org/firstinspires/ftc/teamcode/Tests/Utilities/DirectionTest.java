@@ -30,19 +30,19 @@ public class DirectionTest extends LinearOpMode {
             telemetry.addData("Back Right", backRightMotor.getCurrentPosition());
 
 
-            if(gamepad1.x) {
+            if (gamepad1.x) {
                 frontLeftMotor.setPower(.3);
                 telemetry.addLine("Running Motor: Front Left");
-            } else if(gamepad1.y) {
+            } else if (gamepad1.y) {
                 frontRightMotor.setPower(.3);
 
                 telemetry.addLine("Running Motor: Front Right");
-            } else if(gamepad1.b) {
+            } else if (gamepad1.b) {
                 backRightMotor.setPower(.3);
 
                 telemetry.addLine("Running Motor: Rear Right");
 
-            } else if(gamepad1.a) {
+            } else if (gamepad1.a) {
                 backLeftMotor.setPower(.3);
                 telemetry.addLine("Running Motor: Rear Left");
             } else {

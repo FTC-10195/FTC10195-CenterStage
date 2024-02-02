@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Chamber implements Subsystem {
 
     DcMotorEx spinny;
-    private CRServo bottomRoller;
+    private final CRServo bottomRoller;
 
 
     public Chamber(HardwareMap hardwareMap) {
@@ -23,6 +23,8 @@ public class Chamber implements Subsystem {
         bottomRoller.setPower(right_trigger);
     }
 
-    public void motorsPIN(double power) {spinny.setPower(power);}
+    public void motorsPIN(double power) {
+        spinny.setPower(power);
+    }
 
 }

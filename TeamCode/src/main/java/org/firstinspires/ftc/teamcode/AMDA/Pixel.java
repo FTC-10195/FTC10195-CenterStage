@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.AMDA.PixelColor.Color;
 public class Pixel {
     PixelColor color;
 
-    public Pixel (int col) {
+    public Pixel(int col) {
         color = new PixelColor(col);
     }
 

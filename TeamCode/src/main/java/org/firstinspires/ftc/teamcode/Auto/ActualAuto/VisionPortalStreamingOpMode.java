@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import java.util.concurrent.atomic.AtomicReference;
+
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
 import org.firstinspires.ftc.robotcore.external.function.Continuation;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -24,17 +24,21 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Autonomous(name = "PLEASE WORK")
 public class VisionPortalStreamingOpMode extends LinearOpMode {
     public Rect rectLeft = new Rect(100, 190, 80, 90);
     public Rect rectMiddle = new Rect(250, 170, 200, 40);
     public Rect rectRight = new Rect(500, 190, 90, 80);
     TestingLocationID.Selected selection = TestingLocationID.Selected.NONE;
+
     protected double getAvgSaturation(Mat input, Rect rect) {
         submat = input.submat(rect);
         Scalar color = Core.mean(submat);
         return color.val[1];
     }
+
     public TestingLocationID.Selected getSelection() {
         return selection;
     }

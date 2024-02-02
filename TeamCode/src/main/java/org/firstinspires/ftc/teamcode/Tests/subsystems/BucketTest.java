@@ -1,21 +1,16 @@
 package org.firstinspires.ftc.teamcode.Tests.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.SubSys.Blinkin;
-import org.firstinspires.ftc.teamcode.SubSys.Bucket;
 
 @Config
 @TeleOp
 public class BucketTest extends LinearOpMode {
     public static double pos1 = .1;
     public static double pos2 = .1;
+
     enum COLOR {
         NOTHING,
         WHITE,
@@ -26,9 +21,9 @@ public class BucketTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-     //   Blinkin lights = new Blinkin(hardwareMap);
-       // RevColorSensorV3 lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
-       // RevColorSensorV3 upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
+        //   Blinkin lights = new Blinkin(hardwareMap);
+        // RevColorSensorV3 lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
+        // RevColorSensorV3 upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
 
         Servo lowerServo = hardwareMap.get(Servo.class, "lserv");
         Servo upperServo = hardwareMap.get(Servo.class, "userv");
@@ -47,14 +42,11 @@ public class BucketTest extends LinearOpMode {
 
             if (gamepad1.dpad_right) {
                 lowerServo.setPosition(lowerOut);
-            }
-            else if (gamepad1.dpad_left) {
+            } else if (gamepad1.dpad_left) {
                 lowerServo.setPosition(lowerIn);
-            }
-           else  if (gamepad1.dpad_up) {
+            } else if (gamepad1.dpad_up) {
                 upperServo.setPosition(upperOut);
-            }
-            else if (gamepad1.dpad_down) {
+            } else if (gamepad1.dpad_down) {
                 upperServo.setPosition(upperIn);
             }
 

@@ -9,6 +9,7 @@ public class Arm implements Subsystem {
     Servo left;
     Servo right;
 
+
     public static double out = 0;
 
     public Arm(HardwareMap hardwareMap) {
@@ -21,4 +22,6 @@ public class Arm implements Subsystem {
         left.setPosition(position);
         right.setPosition(position);
     }
+
+
 }

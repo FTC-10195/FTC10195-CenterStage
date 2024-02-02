@@ -5,7 +5,6 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -33,7 +32,7 @@ public class Bucket implements Subsystem {
 
         lowerServo = hardwareMap.get(Servo.class, "lserv");
         upperServo = hardwareMap.get(Servo.class, "userv");
-      //  armServo = hardwareMap.get(ServoEx.class, "aserv");
+        //  armServo = hardwareMap.get(ServoEx.class, "aserv");
     }
 
     public void controlLights() {
@@ -84,20 +83,15 @@ public class Bucket implements Subsystem {
 
         if ((timer.time() / flashLength) % 4 == 0) {
             lights.changeColor(upperPixel);
-        }
-        else if ((timer.time() / flashLength) % 4 == 2) {
+        } else if ((timer.time() / flashLength) % 4 == 2) {
             lights.changeColor(lowerPixel);
-        }
-        else {
+        } else {
             lights.changeColor(RevBlinkinLedDriver.BlinkinPattern.BLACK);
         }
     }
 
     public boolean detectSens(RevColorSensorV3 sensor) {
-        if (sensor.getDistance(DistanceUnit.MM) < bucketDepth) {
-            return true;
-        }
-        return false;
+        return sensor.getDistance(DistanceUnit.MM) < bucketDepth;
     }
 
     public void rotateHook(ServoEx servo) {

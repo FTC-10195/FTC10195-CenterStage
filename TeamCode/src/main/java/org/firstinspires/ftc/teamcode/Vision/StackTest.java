@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
@@ -12,12 +14,12 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-public class LocationID implements VisionProcessor {
 
+public class StackTest implements VisionProcessor {
     public Rect rectLeft = new Rect(100, 190, 80, 90);
     public Rect rectMiddle = new Rect(250, 170, 200, 40);
     public Rect rectRight = new Rect(500, 190, 90, 80);
-    Selected selection = Selected.NONE;
+    LocationID.Selected selection = LocationID.Selected.NONE;
 
     Mat submat = new Mat();
     Mat hsvMat = new Mat();
@@ -35,11 +37,11 @@ public class LocationID implements VisionProcessor {
         double satRectRight = getAvgSaturation(hsvMat, rectRight);
 
         if ((satRectLeft > satRectMiddle) && (satRectLeft > satRectRight)) {
-            return Selected.LEFT;
+            return LocationID.Selected.LEFT;
         } else if ((satRectMiddle > satRectLeft) && (satRectMiddle > satRectRight)) {
-            return Selected.MIDDLE;
+            return LocationID.Selected.MIDDLE;
         }
-        return Selected.RIGHT;
+        return LocationID.Selected.RIGHT;
     }
 
     protected double getAvgSaturation(Mat input, Rect rect) {
@@ -71,7 +73,7 @@ public class LocationID implements VisionProcessor {
         android.graphics.Rect drawRectangleMiddle = makeGraphicsRect(rectMiddle, scaleBmpPxToCanvasPx);
         android.graphics.Rect drawRectangleRight = makeGraphicsRect(rectRight, scaleBmpPxToCanvasPx);
 
-        selection = (Selected) userContext;
+        selection = (LocationID.Selected) userContext;
         switch (selection) {
             case LEFT:
                 canvas.drawRect(drawRectangleLeft, selectedPaint);
@@ -96,7 +98,7 @@ public class LocationID implements VisionProcessor {
         }
     }
 
-    public Selected getSelection() {
+    public LocationID.Selected getSelection() {
         return selection;
     }
 
@@ -106,4 +108,5 @@ public class LocationID implements VisionProcessor {
         MIDDLE,
         RIGHT
     }
+
 }

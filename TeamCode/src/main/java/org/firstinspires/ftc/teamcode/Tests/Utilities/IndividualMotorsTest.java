@@ -8,9 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-
-
-
 @TeleOp
 public class IndividualMotorsTest extends LinearOpMode {
     @Override
@@ -20,7 +17,7 @@ public class IndividualMotorsTest extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("bl");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("br");
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-       // frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        // frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()) {
             telemetry.addLine("Press play to begin the debugging opmode");
@@ -39,20 +36,20 @@ public class IndividualMotorsTest extends LinearOpMode {
                 telemetry.addLine("<font face=\"monospace\">&nbsp;&nbsp;A / X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Rear&nbsp;&nbsp;Left</font>");
                 telemetry.addLine();
 
-                if(gamepad1.x) {
+                if (gamepad1.x) {
                     frontLeftMotor.setPower(.3);
                     frontRightMotor.setPower(0);
                     backRightMotor.setPower(0);
                     backLeftMotor.setPower(0);
                     telemetry.addLine("Running Motor: Front Left");
-                } else if(gamepad1.y) {
+                } else if (gamepad1.y) {
                     frontRightMotor.setPower(.3);
                     frontLeftMotor.setPower(0);
                     backRightMotor.setPower(0);
                     backLeftMotor.setPower(0);
 
                     telemetry.addLine("Running Motor: Front Right");
-                } else if(gamepad1.b) {
+                } else if (gamepad1.b) {
                     backRightMotor.setPower(.3);
                     frontLeftMotor.setPower(0);
                     frontRightMotor.setPower(0);
@@ -60,7 +57,7 @@ public class IndividualMotorsTest extends LinearOpMode {
 
                     telemetry.addLine("Running Motor: Rear Right");
 
-                } else if(gamepad1.a) {
+                } else if (gamepad1.a) {
                     backLeftMotor.setPower(.3);
                     frontLeftMotor.setPower(0);
                     frontRightMotor.setPower(0);
