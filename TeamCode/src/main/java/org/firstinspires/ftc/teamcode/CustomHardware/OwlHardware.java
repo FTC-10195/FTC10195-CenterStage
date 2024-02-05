@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * Superclass for all OwlHardware
+ */
 public class OwlHardware {
     Class hardwareType;
 
@@ -31,6 +34,7 @@ public class OwlHardware {
     }
 
     public void telemetry() {
+
 
     }
 
