@@ -2,26 +2,24 @@ package org.firstinspires.ftc.teamcode.SubSys;
 
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-public class MecanumDrive implements Subsystem {
-    DcMotorEx frontLeftMotor;
-    DcMotorEx frontRightMotor;
-    DcMotorEx backLeftMotor;
-    DcMotorEx backRightMotor;
+public class InsaneMecanumDrive implements Subsystem {
+    DcMotor frontLeftMotor;
+    DcMotor frontRightMotor;
+    DcMotor backLeftMotor;
+    DcMotor backRightMotor;
     Telemetry telemetry;
 
 
-    public MecanumDrive(HardwareMap hwmap, Telemetry telemetry) {
-        frontLeftMotor = hwmap.get(DcMotorEx.class, "fl");
-        frontRightMotor = hwmap.get(DcMotorEx.class, "fr");
-        backLeftMotor = hwmap.get(DcMotorEx.class, "bl");
-        backRightMotor = hwmap.get(DcMotorEx.class, "br");
+    public InsaneMecanumDrive(HardwareMap hwmap, Telemetry telemetry) {
+        frontLeftMotor = hwmap.dcMotor.get("fl");
+        frontRightMotor = hwmap.dcMotor.get("fr");
+        backLeftMotor = hwmap.dcMotor.get("bl");
+        backRightMotor = hwmap.dcMotor.get("br");
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -52,11 +50,11 @@ public class MecanumDrive implements Subsystem {
         backRightMotor.setPower(backRightPower);
 
 
-     //   telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
-     //   telemetry.addData("BL", backLeftMotor.getCurrentPosition());
-      //  telemetry.addData("BR", backRightMotor.getCurrentPosition());
-      //  telemetry.addData("FR", frontRightMotor.getCurrentPosition());
-     //   telemetry.update();
+        telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("BL", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR", backRightMotor.getCurrentPosition());
+        telemetry.addData("FR", frontRightMotor.getCurrentPosition());
+        telemetry.update();
     }
 
     public void forward(int distance) {
@@ -91,17 +89,14 @@ public class MecanumDrive implements Subsystem {
 
 
     }
-    public boolean isJammed() {
-        return (backLeftMotor.getCurrent(CurrentUnit.AMPS) > 10 || backRightMotor.getCurrent(CurrentUnit.AMPS)  > 10 || frontRightMotor.getCurrent(CurrentUnit.AMPS)  > 10|| frontLeftMotor.getCurrent(CurrentUnit.AMPS)  > 10|| backLeftMotor.getCurrent(CurrentUnit.AMPS)  > 10);
-    }
-    public int inchToTick(int inches) {
-        Double inpertick = .0325;
-        Double ticks = ((inches * 10000) / (inpertick * 10000));
-        return (-ticks.intValue());
-    }
 
     //literally same as before, just add some negatives bc of mecanum equations
-    public void strafeRight(int distance) {
+    public void strafe(int rightDistance) {
+        //Set the motors to original directions for this code only
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -113,10 +108,10 @@ public class MecanumDrive implements Subsystem {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backRightMotor.setTargetPosition(-distance);
-        backLeftMotor.setTargetPosition(distance);
-        frontRightMotor.setTargetPosition(-distance);
-        frontLeftMotor.setTargetPosition(distance);
+        backRightMotor.setTargetPosition(-rightDistance);
+        backLeftMotor.setTargetPosition(rightDistance);
+        frontRightMotor.setTargetPosition(rightDistance);
+        frontLeftMotor.setTargetPosition(-rightDistance);
 
         backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -124,64 +119,23 @@ public class MecanumDrive implements Subsystem {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 //        All of these values are set to .1, but all of these values in strafeLeft() are set to 1
-        backRightMotor.setPower(.1);
-        backLeftMotor.setPower(.1);
-        frontRightMotor.setPower(.1);
-        frontLeftMotor.setPower(.1);
-        while (backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()) {
-        }
-        backRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        frontLeftMotor.setPower(0);
-    }
-
-    public void strafeLeft(int distance) {
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        backRightMotor.setTargetPosition(-distance);
-        backLeftMotor.setTargetPosition(distance);
-        frontRightMotor.setTargetPosition(-distance);
-        frontLeftMotor.setTargetPosition(distance);
-
-//        For refrence, the following code is found in strafeRight();
-//        theoretically, the above should be equal and opposite to the
-//        below...I think
-//        backRightMotor.setTargetPosition(-distance);
-//        backLeftMotor.setTargetPosition(distance);
-//        frontRightMotor.setTargetPosition(-distance);
-//        frontLeftMotor.setTargetPosition(distance);
-
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // All of these values are set to 1, but all of the values in strafeRight() are .1
         backRightMotor.setPower(1);
         backLeftMotor.setPower(1);
         frontRightMotor.setPower(1);
         frontLeftMotor.setPower(1);
-
         while (backLeftMotor.isBusy() && backRightMotor.isBusy() && frontLeftMotor.isBusy() && frontRightMotor.isBusy()) {
-//        There is nothing in this loop; I'm pretty sure this means that this loop will
-//        simply run until the motors reach their desired position, and then the code
-//        following the loop will run
         }
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
 
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
+
 
 }
 

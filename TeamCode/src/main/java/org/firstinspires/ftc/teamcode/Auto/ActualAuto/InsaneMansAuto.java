@@ -8,23 +8,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.SubSys.Chamber;
 import org.firstinspires.ftc.teamcode.SubSys.DropDown;
+import org.firstinspires.ftc.teamcode.SubSys.InsaneMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Vision.LocationID;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
-public class PoorMansAuto extends LinearOpMode {
+public class InsaneMansAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, telemetry);
+        InsaneMecanumDrive drive = new InsaneMecanumDrive(hardwareMap, telemetry);
         DropDown drop = new DropDown(hardwareMap);
         LocationID id = new LocationID();
 
         VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), id);
         Chamber ber = new Chamber(hardwareMap);
-        ElapsedTime time = new ElapsedTime();
+        ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS); // I changed the resolution to milliseconds for increased accuracy
         telemetry.clear();
 
         while (opModeInInit()) {
@@ -39,11 +40,11 @@ public class PoorMansAuto extends LinearOpMode {
         time.startTime();
         if(select == LocationID.Selected.LEFT) {
             drive.forward(inchToTick(24));
-            drive.strafeLeft(-250);
+            drive.strafe(-250);
             time.reset();
 
-            while(time.seconds() < 6) {
-                ber.motorsPIN(-.2);
+            while(time.seconds() < 6) {  // This may have been impacted from changing the time resolution to milliseconds;
+                ber.motorsPIN(-0.5);
                 ber.servoRoller(-1);
             }
 
@@ -52,10 +53,10 @@ public class PoorMansAuto extends LinearOpMode {
         }
         else if(select == LocationID.Selected.RIGHT) {
             drive.forward(inchToTick(24));
-            drive.strafeLeft(250);
+            drive.strafe(250);
             time.reset();
             while(time.seconds() < 6) {
-                ber.motorsPIN(-.2);
+                ber.motorsPIN(-0.5);
                 ber.servoRoller(-1);
             }
 
@@ -64,7 +65,7 @@ public class PoorMansAuto extends LinearOpMode {
             drive.forward(inchToTick(24));
             time.reset();
             while(time.seconds() < 6) {
-                ber.motorsPIN(-.2);
+                ber.motorsPIN(-0.5);
                 ber.servoRoller(-1);
             }
 
