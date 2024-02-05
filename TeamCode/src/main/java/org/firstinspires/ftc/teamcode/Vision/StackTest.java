@@ -16,10 +16,12 @@ import org.opencv.imgproc.Imgproc;
 
 
 public class StackTest implements VisionProcessor {
-    public Rect rectLeft = new Rect(100, 190, 80, 90);
-    public Rect rectMiddle = new Rect(250, 170, 200, 40);
-    public Rect rectRight = new Rect(500, 190, 90, 80);
-    LocationID.Selected selection = LocationID.Selected.NONE;
+    public Rect rect1 = new Rect(100, 190, 80, 90); //ALL COORDINATES PLACEHOLDERS!
+    public Rect rect2 = new Rect(250, 170, 200, 40);
+    public Rect rect3 = new Rect(500, 190, 90, 80);
+    public Rect rect4 = new Rect(0,0,0,0);
+    public Rect rect5 = new Rect(0,0,0,0);
+    StackTest.Selected selection = StackTest.Selected.ZERO;
 
     Mat submat = new Mat();
     Mat hsvMat = new Mat();
@@ -32,22 +34,69 @@ public class StackTest implements VisionProcessor {
     public Object processFrame(Mat frame, long captureTimeNanos) {
         Imgproc.cvtColor(frame, hsvMat, Imgproc.COLOR_RGB2HSV);
 
-        double satRectLeft = getAvgSaturation(hsvMat, rectLeft);
-        double satRectMiddle = getAvgSaturation(hsvMat, rectMiddle);
-        double satRectRight = getAvgSaturation(hsvMat, rectRight);
+        double valRect1 = getAvgValue(hsvMat, rect1);
+        double valRect2 = getAvgValue(hsvMat, rect2);
+        double valRect3 = getAvgValue(hsvMat, rect3);
+        double valRect4 = getAvgValue(hsvMat, rect4);
+        double valRect5 = getAvgValue(hsvMat, rect5);
 
-        if ((satRectLeft > satRectMiddle) && (satRectLeft > satRectRight)) {
-            return LocationID.Selected.LEFT;
-        } else if ((satRectMiddle > satRectLeft) && (satRectMiddle > satRectRight)) {
-            return LocationID.Selected.MIDDLE;
-        }
-        return LocationID.Selected.RIGHT;
+        double threshold = 90.;
+
+        boolean R1 = valRect1 > threshold;
+        boolean R2 = valRect2 > threshold;
+        boolean R3 = valRect3 > threshold;
+        boolean R4 = valRect4 > threshold;
+        boolean R5 = valRect5 > threshold;
+
+        boolean[] myArray = new boolean[5];
+
+        myArray[0] = R1;
+        myArray[1] = R2;
+        myArray[2] = R3;
+        myArray[3] = R4;
+        myArray[4] = R5;
+
+        int numInStack = countStack(myArray);
+
+        return(intToEnum(numInStack));
+
     }
 
-    protected double getAvgSaturation(Mat input, Rect rect) {
+    public int countStack(boolean[] booleanArray) {
+        int numInStack = 0;
+        for (int i = 0; i < booleanArray.length; i++) {
+            if (booleanArray[i]) {
+                numInStack++;
+            }
+        }
+        return(numInStack);
+    }
+
+    public Enum intToEnum(int numInStack) {
+        if (numInStack == 1) {
+            return(Selected.ONE);
+        }
+        else if (numInStack == 2) {
+            return(Selected.TWO);
+        }
+        else if (numInStack == 3) {
+            return(Selected.THREE);
+        }
+        else if (numInStack == 4) {
+            return(Selected.FOUR);
+        }
+        else if (numInStack == 5) {
+            return(Selected.FIVE);
+        }
+        else {
+            return(Selected.ZERO);
+        }
+    }
+
+    protected double getAvgValue(Mat input, Rect rect) {
         submat = input.submat(rect);
         Scalar color = Core.mean(submat);
-        return color.val[1];
+        return color.val[2];
     }
 
     private android.graphics.Rect makeGraphicsRect(Rect rect, float scaleBmpPxToCanvasPx) {
@@ -69,11 +118,18 @@ public class StackTest implements VisionProcessor {
         Paint nonSelectedPaint = new Paint(selectedPaint);
         nonSelectedPaint.setColor(Color.GREEN);
 
-        android.graphics.Rect drawRectangleLeft = makeGraphicsRect(rectLeft, scaleBmpPxToCanvasPx);
-        android.graphics.Rect drawRectangleMiddle = makeGraphicsRect(rectMiddle, scaleBmpPxToCanvasPx);
-        android.graphics.Rect drawRectangleRight = makeGraphicsRect(rectRight, scaleBmpPxToCanvasPx);
+        android.graphics.Rect drawRectangle1 = makeGraphicsRect(rect1, scaleBmpPxToCanvasPx);
+        android.graphics.Rect drawRectangle2 = makeGraphicsRect(rect2, scaleBmpPxToCanvasPx);
+        android.graphics.Rect drawRectangle3 = makeGraphicsRect(rect3, scaleBmpPxToCanvasPx);
+        android.graphics.Rect drawRectangle4 = makeGraphicsRect(rect4, scaleBmpPxToCanvasPx);
+        android.graphics.Rect drawRectangle5 = makeGraphicsRect(rect5, scaleBmpPxToCanvasPx);
 
-        selection = (LocationID.Selected) userContext;
+        canvas.drawRect(drawRectangle1, nonSelectedPaint);
+        canvas.drawRect(drawRectangle2, nonSelectedPaint);
+        canvas.drawRect(drawRectangle3, nonSelectedPaint);
+        canvas.drawRect(drawRectangle4, nonSelectedPaint);
+        canvas.drawRect(drawRectangle5, nonSelectedPaint);
+        /*selection = (LocationID.Selected) userContext;
         switch (selection) {
             case LEFT:
                 canvas.drawRect(drawRectangleLeft, selectedPaint);
@@ -95,18 +151,19 @@ public class StackTest implements VisionProcessor {
                 canvas.drawRect(drawRectangleMiddle, nonSelectedPaint);
                 canvas.drawRect(drawRectangleRight, nonSelectedPaint);
                 break;
-        }
+        }*/
     }
 
-    public LocationID.Selected getSelection() {
+    public StackTest.Selected getSelection() {
         return selection;
     }
 
     public enum Selected {
-        NONE,
-        LEFT,
-        MIDDLE,
-        RIGHT
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE
     }
-
 }

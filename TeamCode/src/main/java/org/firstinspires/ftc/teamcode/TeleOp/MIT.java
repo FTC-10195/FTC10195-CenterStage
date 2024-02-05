@@ -15,6 +15,10 @@ import org.firstinspires.ftc.teamcode.SubSys.Slides;
 @Config
 public class MIT extends LinearOpMode {
 
+    public static double frCurrent = 0;
+    public static double brCurrent = 0;
+    public static double flCurrent = 0;
+    public static double blCurrent = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDrive drive = new MecanumDrive(hardwareMap, telemetry);
@@ -29,7 +33,10 @@ public class MIT extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
+             frCurrent = drive.;
+              brCurrent = 0;
+              flCurrent = 0;
+              blCurrent = 0;
 
             drive.robotDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             slides.manualControl(gamepad2.dpad_up, gamepad2.dpad_down);

@@ -18,7 +18,7 @@ public class StackVisionTest extends LinearOpMode {
         telemetry.clear();
 
         while (opModeInInit()) {
-            telemetry.addData("Zone", stack.getSelection());
+            telemetry.addData("# in stack",stack.getSelection());
             telemetry.update();
 
         }
