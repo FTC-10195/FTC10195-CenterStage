@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class Chamber implements Subsystem {
 
     DcMotorEx spinny;
@@ -25,6 +27,10 @@ public class Chamber implements Subsystem {
 
     public void motorsPIN(double power) {
         spinny.setPower(power);
+    }
+
+    public boolean isJammed() {
+        return spinny.getCurrent(CurrentUnit.AMPS) > 10;
     }
 
 }

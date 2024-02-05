@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class Slides implements Subsystem {
     DcMotorEx leftSlide;
     DcMotorEx rightSlide;
@@ -67,6 +69,10 @@ public class Slides implements Subsystem {
 
     public void setPid(boolean set) {
         pid = set;
+    }
+
+    public boolean isJammed() {
+        return rightSlide.getCurrent(CurrentUnit.AMPS) > 10 || leftSlide.getCurrent(CurrentUnit.AMPS) > 10;
     }
 
 }

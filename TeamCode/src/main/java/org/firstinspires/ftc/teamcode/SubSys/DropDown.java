@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class DropDown implements Subsystem {
     DcMotorEx drop;
     Servo left;
     Servo right;
 
-    double down = .05;
+    double down = .1;
     double up = .5;
 
     int clicks = 0;
@@ -62,7 +64,12 @@ public class DropDown implements Subsystem {
         }
     }
 
+    public boolean isJammed() {
+        return drop.getCurrent(CurrentUnit.AMPS) > 10;
     }
+
+
+}
 
 
 

@@ -13,6 +13,7 @@ public class VisionTest extends LinearOpMode {
 
         LocationID id = new LocationID();
 
+
         VisionPortal portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), id);
 
         telemetry.clear();

@@ -25,8 +25,17 @@ public class Bucket implements Subsystem {
     Blinkin lights;
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
+
+    enum COLOR {
+        NOTHING,
+        WHITE,
+        PURPLE,
+        GREEN,
+        YELLOW
+    }
+
     public Bucket(HardwareMap hardwareMap) {
-        lights = new Blinkin(hardwareMap);
+      //  lights = new Blinkin(hardwareMap);
         lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
         upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
 
@@ -35,11 +44,15 @@ public class Bucket implements Subsystem {
         //  armServo = hardwareMap.get(ServoEx.class, "aserv");
     }
 
-    public void controlLights() {
+    COLOR top = COLOR.NOTHING;
+    COLOR bottom = COLOR.NOTHING;
+
+
+  /*  public void controlLights() {
         RevBlinkinLedDriver.BlinkinPattern upperPixel = RevBlinkinLedDriver.BlinkinPattern.HOT_PINK;
         RevBlinkinLedDriver.BlinkinPattern lowerPixel = RevBlinkinLedDriver.BlinkinPattern.HOT_PINK;
 
-        /*
+
         if (quality is in range) {
             upperPixel = BlinkinPattern.WHITE;
         }
@@ -79,7 +92,6 @@ public class Bucket implements Subsystem {
         else {
             lowerPixel = BlinkinPattern.BLACK;
         }
-         */
 
         if ((timer.time() / flashLength) % 4 == 0) {
             lights.changeColor(upperPixel);
@@ -88,7 +100,11 @@ public class Bucket implements Subsystem {
         } else {
             lights.changeColor(RevBlinkinLedDriver.BlinkinPattern.BLACK);
         }
+
     }
+
+   */
+
 
     public boolean detectSens(RevColorSensorV3 sensor) {
         return sensor.getDistance(DistanceUnit.MM) < bucketDepth;

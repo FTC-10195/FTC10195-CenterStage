@@ -11,10 +11,13 @@ import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSys.SimpleBucket;
 import org.firstinspires.ftc.teamcode.SubSys.Slides;
 
+import java.util.ArrayList;
+
 @TeleOp(group = "Match")
 @Config
 public class MIT extends LinearOpMode {
 
+    public  static  double pos = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDrive drive = new MecanumDrive(hardwareMap, telemetry);
@@ -53,19 +56,27 @@ public class MIT extends LinearOpMode {
 
             }
 
-            if (gamepad2.dpad_left) {
-                arm.rotate(0);
-            } else if (gamepad2.dpad_right) {
-                arm.rotate(.06);
+           // arm.rotate(pos);
+          if (gamepad2.dpad_left) {
+                arm.rotate(0.05);
+           } else if (gamepad2.dpad_right) {
+               arm.rotate(.50);
             }
 
             if (gamepad2.a) {
-                bucket.manualMove(0);
+                bucket.manualMove(0.35);
 
             } else if (gamepad2.b) {
                 bucket.manualMove(.7);
 
             }
+
+           telemetry.addData("Chamber jam", ber.isJammed());
+
+            telemetry.addData("Drivetrain jam", drive.isJammed());
+            telemetry.addData("DropDrown jam", intake.isJammed());
+            telemetry.addData("Slides  jam", slides.isJammed());
+            telemetry.update();
 
 
         }

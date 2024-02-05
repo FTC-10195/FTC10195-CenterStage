@@ -23,5 +23,4 @@ public class Arm implements Subsystem {
         right.setPosition(position);
     }
 
-
 }

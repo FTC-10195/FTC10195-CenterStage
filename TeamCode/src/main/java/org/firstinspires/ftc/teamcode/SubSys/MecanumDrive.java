@@ -2,24 +2,26 @@ package org.firstinspires.ftc.teamcode.SubSys;
 
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class MecanumDrive implements Subsystem {
-    DcMotor frontLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backLeftMotor;
-    DcMotor backRightMotor;
+    DcMotorEx frontLeftMotor;
+    DcMotorEx frontRightMotor;
+    DcMotorEx backLeftMotor;
+    DcMotorEx backRightMotor;
     Telemetry telemetry;
 
 
     public MecanumDrive(HardwareMap hwmap, Telemetry telemetry) {
-        frontLeftMotor = hwmap.dcMotor.get("fl");
-        frontRightMotor = hwmap.dcMotor.get("fr");
-        backLeftMotor = hwmap.dcMotor.get("bl");
-        backRightMotor = hwmap.dcMotor.get("br");
+        frontLeftMotor = hwmap.get(DcMotorEx.class, "fl");
+        frontRightMotor = hwmap.get(DcMotorEx.class, "fr");
+        backLeftMotor = hwmap.get(DcMotorEx.class, "bl");
+        backRightMotor = hwmap.get(DcMotorEx.class, "br");
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -50,11 +52,11 @@ public class MecanumDrive implements Subsystem {
         backRightMotor.setPower(backRightPower);
 
 
-        telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
-        telemetry.addData("BL", backLeftMotor.getCurrentPosition());
-        telemetry.addData("BR", backRightMotor.getCurrentPosition());
-        telemetry.addData("FR", frontRightMotor.getCurrentPosition());
-        telemetry.update();
+     //   telemetry.addData("FL", frontLeftMotor.getCurrentPosition());
+     //   telemetry.addData("BL", backLeftMotor.getCurrentPosition());
+      //  telemetry.addData("BR", backRightMotor.getCurrentPosition());
+      //  telemetry.addData("FR", frontRightMotor.getCurrentPosition());
+     //   telemetry.update();
     }
 
     public void forward(int distance) {
@@ -88,6 +90,14 @@ public class MecanumDrive implements Subsystem {
         frontLeftMotor.setPower(0);
 
 
+    }
+    public boolean isJammed() {
+        return (backLeftMotor.getCurrent(CurrentUnit.AMPS) > 10 || backRightMotor.getCurrent(CurrentUnit.AMPS)  > 10 || frontRightMotor.getCurrent(CurrentUnit.AMPS)  > 10|| frontLeftMotor.getCurrent(CurrentUnit.AMPS)  > 10|| backLeftMotor.getCurrent(CurrentUnit.AMPS)  > 10);
+    }
+    public int inchToTick(int inches) {
+        Double inpertick = .0325;
+        Double ticks = ((inches * 10000) / (inpertick * 10000));
+        return (-ticks.intValue());
     }
 
     //literally same as before, just add some negatives bc of mecanum equations
