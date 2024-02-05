@@ -9,14 +9,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 /**
  * Extension of the RevColorSensorV3 class with detection logic and telemetry niceness
  */
-public class OwlColorSensor  {
+public class OwlColorSensor extends OwlHardware  {
      RevColorSensorV3 sensor;
 
-    Telemetry telemetry;
-
-    String displayName;
-
-    String config;
 
     /**
      *
@@ -26,10 +21,7 @@ public class OwlColorSensor  {
      * @param displayName -- name to be printed on telemetry, is not the same as config
      */
     public OwlColorSensor(HardwareMap hardwareMap, Telemetry telemetry, String config, String displayName) {
-        sensor = hardwareMap.get(RevColorSensorV3.class, config);
-        this.telemetry = telemetry;
-        this.config = config;
-        this.displayName = displayName;
+        super(hardwareMap, telemetry, config, displayName, RevColorSensorV3.class);
     }
 
     public  RevColorSensorV3 getInnerSensor() {
@@ -85,6 +77,9 @@ public class OwlColorSensor  {
         return color;
     }
 
+
+
+    @Override
     public void telemetry() {
         // Display telemetry for upper sensor
         telemetry.addData(displayName + "- Red", red);

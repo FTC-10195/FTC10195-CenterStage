@@ -17,9 +17,7 @@ public class BucketTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //   Blinkin lights = new Blinkin(hardwareMap);
-        // RevColorSensorV3 lowerSensor = hardwareMap.get(RevColorSensorV3.class, "lsens");
-        // RevColorSensorV3 upperSensor = hardwareMap.get(RevColorSensorV3.class, "usens");
+        OwlColorSensor sensor = new OwlColorSensor(hardwareMap, telemetry, "usens", "Upper Sensor");
 
         Servo lowerServo = hardwareMap.get(Servo.class, "lserv");
         Servo upperServo = hardwareMap.get(Servo.class, "userv");
@@ -44,20 +42,10 @@ public class BucketTest extends LinearOpMode {
                 upperServo.setPosition(upperIn);
             }
 
-            OwlColorSensor sensor = new OwlColorSensor(hardwareMap, telemetry, "usens", "Upper Sensor");
-
-            // Display telemetry for upper sensor
-            telemetry.addData("Upper Sensor - Red", upperRed);
-            telemetry.addData("Upper Sensor - Blue", upperBlue);
-            telemetry.addData("Upper Sensor - Green", upperGreen);
-            telemetry.addData("Upper Sensor - Alpha", upperAlpha);
-            telemetry.addData("Upper Sensor - Distance (mm)", upperDist);
-
-            telemetry.addData("Current color", color);
 
 
-            telemetry.update();
-*/
+
+
         }
     }
 }
