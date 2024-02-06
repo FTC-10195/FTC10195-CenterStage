@@ -88,7 +88,6 @@ public class OwlColorSensor extends OwlHardware  {
         telemetry.addData(displayName + "Alpha", alpha);
         telemetry.addData(displayName + "Distance (mm)", distance);
         telemetry.addData("Current color", color);
-        telemetry.update();
 
     }
 
