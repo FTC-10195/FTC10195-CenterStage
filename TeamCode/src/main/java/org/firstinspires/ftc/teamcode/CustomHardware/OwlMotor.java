@@ -12,6 +12,8 @@ public class OwlMotor extends OwlHardware {
 
     DcMotorEx motor;
 
+    double threshold = 0;
+
     public OwlMotor(HardwareMap hardwareMap, Telemetry telemetry, String config, String displayName, DcMotor.RunMode mode, DcMotorSimple.Direction direction) {
         super(hardwareMap, telemetry, config, displayName, DcMotorEx.class);
         motor.setMode(mode);
@@ -20,18 +22,24 @@ public class OwlMotor extends OwlHardware {
     }
 
 
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
 
-
-    public DcMotorEx getInnerMotor() {
+    @Override
+    public DcMotorEx returnDevice() {
         return motor;
     }
     public boolean currentOverThreshold() {
-        return getInnerMotor().getCurrent(CurrentUnit.AMPS) > 5;
+        return returnDevice().getCurrent(CurrentUnit.AMPS) > threshold;
     }
 
     @Override
     public void telemetry() {
-        telemetry.addData("Current current", getInnerMotor().getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Current current", returnDevice().getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Current power", returnDevice().getPower());
+        telemetry.addData("Over threshold", currentOverThreshold());
+
 
     }
 }

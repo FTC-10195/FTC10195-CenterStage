@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.CustomHardware;
 
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -10,10 +8,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Superclass for all OwlHardware
  */
 public class OwlHardware {
-    Class hardwareType;
 
-    Object device;
+    private Object device;
 
+    private  Class  hardwareType;
     Telemetry telemetry;
 
     String displayName;
@@ -29,8 +27,8 @@ public class OwlHardware {
 
     }
 
-    public Class returnInnerClass(){
-        return device.getClass();
+    public Object returnDevice(){
+        return null;
     }
 
     public void telemetry() {

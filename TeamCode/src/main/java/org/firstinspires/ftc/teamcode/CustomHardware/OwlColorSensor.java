@@ -24,10 +24,6 @@ public class OwlColorSensor extends OwlHardware  {
         super(hardwareMap, telemetry, config, displayName, RevColorSensorV3.class);
     }
 
-    public  RevColorSensorV3 getInnerSensor() {
-        return sensor;
-    }
-
     enum SensedColor {
         NOTHING,
         WHITE,
@@ -78,6 +74,10 @@ public class OwlColorSensor extends OwlHardware  {
     }
 
 
+    @Override
+    public Object returnDevice() {
+        return sensor;
+    }
 
     @Override
     public void telemetry() {
