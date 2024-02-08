@@ -16,9 +16,6 @@ public class OwlMotor extends OwlHardware {
 
     public OwlMotor(HardwareMap hardwareMap, Telemetry telemetry, String config, String displayName, DcMotor.RunMode mode, DcMotorSimple.Direction direction) {
         super(hardwareMap, telemetry, config, displayName, DcMotorEx.class);
-        motor.setMode(mode);
-        motor.setDirection(direction);
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 

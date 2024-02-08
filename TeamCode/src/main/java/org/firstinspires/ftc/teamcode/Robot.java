@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSys.Bucket;
 import org.firstinspires.ftc.teamcode.SubSys.Chamber;
 import org.firstinspires.ftc.teamcode.SubSys.DropDown;
@@ -17,11 +18,11 @@ public class Robot {
     private MecanumDrive mecanumDrive;
     private final Slides slides;
 
-    public Robot(HardwareMap hardwareMap) {
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
         bucket = new Bucket(hardwareMap);
         chamber = new Chamber(hardwareMap);
         dropDown = new DropDown(hardwareMap);
-        slides = new Slides(hardwareMap);
+        slides = new Slides(hardwareMap, telemetry);
 
     }
 

@@ -3,16 +3,22 @@ package org.firstinspires.ftc.teamcode.SubSys;
 import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.CustomHardware.OwlMotor;
 
-public class Slides implements Subsystem {
-    DcMotorEx leftSlide;
-    DcMotorEx rightSlide;
+public class Slides extends SubsystemBase {
+    OwlMotor leftSlide;
+    OwlMotor rightSlide;
     private static double Kp;
     private static double Ki;
     private static double Kd;
@@ -20,32 +26,73 @@ public class Slides implements Subsystem {
     private static double stability_thresh;
     private static double lowPassGain;
     private boolean pid = false;
-    PIDCoefficientsEx coefficients = new PIDCoefficientsEx(Kp, Ki, Kd, integralSumMax,
-            stability_thresh,
-            lowPassGain);
-    // usage of the PID
-    PIDEx controller = new PIDEx(coefficients);
 
-    public Slides(HardwareMap hardwareMap) {
-        leftSlide = hardwareMap.get(DcMotorEx.class, "ls");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "rs");
-        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+    private static double target;
+    private  static double Kf;
+
+    // usage of the PID
+    PIDFController controller = new PIDFController(Kp, Ki, Kd, Kf);
+
+    private final double MINIMUM_POS = 20;
+    private final double INTAKEPOS = 30;
+    private final double LINE1 = 2500;
+    private final double LINE2 = 4000;
+    private final double LINE3 = 6000;
+    private final double MAXIMUM = 6500;
+    public static double currentLeft;
+    public static double currentRight;
+    enum SlideStates {
+        MINIMUM,
+        INTAKEPOS,
+        LINE1,
+        LINE2,
+        LINES,
+        MAXIMUM
+    }
+
+    public Slides(HardwareMap hardwareMap, Telemetry telemetry) {
+        controller.setTolerance(20);
+        leftSlide = new OwlMotor(hardwareMap, telemetry, "ls", "Left Slide Motor",
+                DcMotor.RunMode.RUN_WITHOUT_ENCODER,
+                DcMotorSimple.Direction.REVERSE);
+        rightSlide = new OwlMotor(hardwareMap, telemetry, "rs", "Right Slide Motor",
+                DcMotor.RunMode.RUN_WITHOUT_ENCODER,
+                DcMotorSimple.Direction.FORWARD);
 
     }
 
-    public void setHeight(int target) {
-        if (pid) {
-            leftSlide.setPower(controller.calculate(target, leftSlide.getCurrentPosition()));
-            rightSlide.setPower(controller.calculate(target, rightSlide.getCurrentPosition()));
+    @Override
+    public void periodic() {
+        currentLeft = leftSlide.returnDevice().getCurrentPosition();
+        currentRight = leftSlide.returnDevice().getCurrentPosition();
+
+        leftSlide.returnDevice().setPower((controller.calculate(currentLeft, target)));
+        rightSlide.returnDevice().setPower((controller.calculate(currentRight, target)));
+
+
+
+
+    }
+
+
+    public void setLift(SlideStates state) {
+        switch (state) {
+            case MINIMUM:
+                target = MINIMUM_POS;
+                break;
+            case INTAKEPOS:
+                target = INTAKEPOS;
+                break;
+            case LINE1:
+                target = INTAKEPOS;
+                break;
+
+
+
         }
     }
 
-
-    public void manualControl(boolean up, boolean down) {
+  /*  public void manualControl(boolean up, boolean down) {
         if (up) {
             //   if (rightSlide.getCurrentPosition() < 2600) {
             rightSlide.setPower(1);
@@ -65,14 +112,13 @@ public class Slides implements Subsystem {
             rightSlide.setPower(0);
             leftSlide.setPower(0);
         }
-    }
 
-    public void setPid(boolean set) {
-        pid = set;
-    }
+   */
+
+
 
     public boolean isJammed() {
-        return rightSlide.getCurrent(CurrentUnit.AMPS) > 10 || leftSlide.getCurrent(CurrentUnit.AMPS) > 10;
+        return rightSlide.currentOverThreshold() || leftSlide.currentOverThreshold();
     }
 
 }

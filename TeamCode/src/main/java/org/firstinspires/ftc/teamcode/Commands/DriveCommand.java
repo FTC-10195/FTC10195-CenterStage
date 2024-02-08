@@ -10,22 +10,23 @@ import java.util.function.DoubleSupplier;
 
 public class DriveCommand extends CommandBase {
 
-    private final MecanumDrive mecanumDrive;
+    private final MecanumDrive drive;
     private DoubleSupplier forward;
     private  DoubleSupplier rotate;
     private  DoubleSupplier strafe;
 
     public DriveCommand(MecanumDrive drive, DoubleSupplier forward, DoubleSupplier rotate, DoubleSupplier strafe) {
-        mecanumDrive = drive;
+        this.drive = drive;
         this.forward = forward;
         this.rotate = rotate;
         this.strafe = strafe;
+        addRequirements(drive);
     }
 
     @Override
     public void execute() {
-        mecanumDrive.robotDrive(
-                forward.getAsDouble(),
+        drive.robotDrive(
+                -forward.getAsDouble(),
                 strafe.getAsDouble(),
                 rotate.getAsDouble()
         );

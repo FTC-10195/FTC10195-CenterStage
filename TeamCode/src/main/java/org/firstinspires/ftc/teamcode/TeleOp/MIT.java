@@ -20,10 +20,12 @@ public class MIT extends LinearOpMode {
         MecanumDrive  drive = new MecanumDrive(hardwareMap, telemetry);
         GamepadEx controller1 = new GamepadEx(gamepad1);
         GamepadEx controller2 = new GamepadEx(gamepad2);
-        drive.setDefaultCommand(new DriveCommand(drive,
-                controller1::getLeftY,
+        drive.setDefaultCommand( new DriveCommand(drive,
+               controller1::getLeftY,
                 controller1::getRightX,
                 controller1::getLeftX));
+
+
         waitForStart();
 
         if (isStopRequested()) return;
