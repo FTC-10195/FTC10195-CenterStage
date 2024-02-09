@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSys.CommandSubsys;
 
+import android.transition.Slide;
+
 import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
 import com.arcrobotics.ftclib.command.Subsystem;
@@ -36,14 +38,19 @@ public class Slides extends SubsystemBase {
     private final double MAXIMUM = 6500;
     public static double currentLeft;
     public static double currentRight;
+
     enum SlideStates {
         MINIMUM,
         INTAKEPOS,
         LINE1,
         LINE2,
         LINES,
-        MAXIMUM
+        MAXIMUM,
+        MANUAL,
+        IDLE
     }
+
+    SlideStates state=  SlideStates.MINIMUM;
 
     public Slides(HardwareMap hardwareMap, Telemetry telemetry) {
         controller.setTolerance(20);
@@ -57,50 +64,62 @@ public class Slides extends SubsystemBase {
         currentLeft = leftSlide.getCurrentPosition();
         currentRight = leftSlide.getCurrentPosition();
 
-        leftSlide.setPower((controller.calculate(currentLeft, target)));
-        rightSlide.setPower((controller.calculate(currentRight, target)));
+        if (state != SlideStates.MANUAL) {
+            leftSlide.setPower((controller.calculate(currentLeft, target)));
+            rightSlide.setPower((controller.calculate(currentRight, target)));
+        }
+
     }
 
 
-    public void setLift(SlideStates state) {
+    /***
+     *
+     * @param state
+     * sets the target of the system, inputting a state
+     */
+    public void setTarget(SlideStates state) {
         switch (state) {
             case MINIMUM:
+                state = SlideStates.MANUAL;
                 target = MINIMUM_POS;
                 break;
             case INTAKEPOS:
+                state = SlideStates.INTAKEPOS;
+
                 target = INTAKEPOS;
                 break;
             case LINE1:
-                target = INTAKEPOS;
+                target = LINE1;
                 break;
-
+            case LINE2:
+                target = LINE2;
+                break;
+            case MAXIMUM:
+                target= MAXIMUM;
+                break;
 
 
         }
     }
 
-  /*  public void manualControl(boolean up, boolean down) {
-        if (up) {
-            //   if (rightSlide.getCurrentPosition() < 2600) {
-            rightSlide.setPower(1);
-            //    } else if (rightSlide.getCurrentPosition() > 2600) {
-            leftSlide.setPower(1);
-            //   }
-            //    if (leftSlide.getCurrentPosition() < 2150) {
-            //  leftSlide.setPower(1);
-        }
-        //  else if (leftSlide.getCurrentPosition() > 2150) {
+    public double setManualTarget(boolean up, boolean down) {
 
-        else if (down) {
-            rightSlide.setPower(-1);
-            leftSlide.setPower(-1);
+        return target - 20;
+    }
+   public void goDown() {
+        leftSlide.setPower(-1);
+        rightSlide.setPower(1);
+   }
 
-        } else {
-            rightSlide.setPower(0);
-            leftSlide.setPower(0);
-        }
+   public void goUp() {
+        leftSlide.setPower(1);
+        rightSlide.setPower(1);
+   }
 
-   */
+   public void stopMoving() {
+        leftSlide.setPower(0);
+        rightSlide.setPower(0);
+   }
 
 /*
 
