@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SubSys;
+package org.firstinspires.ftc.teamcode.SubSys.CommandSubsys;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -45,7 +45,7 @@ public class MecanumDrive extends SubsystemBase {
         double backRightPower = (left_stick_y + left_stick_x - right_stick_x) / denominator;
 
         //set motor power values
-        frontLeftMotor.setPower(frontLeftPower);
+        frontLeftMotor.setPower(frontLeftPower); // This is oriented by looking straight on at the robot, so this would be the wheel closest to the slides on the control hub side
         backLeftMotor.setPower(backLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);

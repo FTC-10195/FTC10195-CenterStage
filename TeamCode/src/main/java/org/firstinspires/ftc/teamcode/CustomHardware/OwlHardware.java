@@ -19,11 +19,10 @@ public class OwlHardware {
     String config;
 
     public OwlHardware(HardwareMap hardwareMap, Telemetry telemetry, String config, String displayName, Class hardwareType) {
-        this.hardwareType = hardwareType;
-        device = hardwareMap.get(hardwareType, config);
-        this.telemetry = telemetry;
-        this.config = config;
-        this.displayName = displayName;
+       // this.hardwareType = hardwareType;
+      //  this.telemetry = telemetry;
+      //  this.config = config;
+     //   this.displayName = displayName;
 
     }
 

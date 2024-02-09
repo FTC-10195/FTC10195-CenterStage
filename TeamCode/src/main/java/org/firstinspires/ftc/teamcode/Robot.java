@@ -6,8 +6,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSys.Bucket;
 import org.firstinspires.ftc.teamcode.SubSys.Chamber;
 import org.firstinspires.ftc.teamcode.SubSys.DropDown;
-import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
-import org.firstinspires.ftc.teamcode.SubSys.Slides;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.Slides;
 
 
 public class Robot {

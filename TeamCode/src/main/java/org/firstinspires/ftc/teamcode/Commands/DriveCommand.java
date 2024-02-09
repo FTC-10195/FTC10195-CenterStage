@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.qualcomm.robotcore.robocol.Command;
 
-import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
 
 import java.util.function.DoubleSupplier;
 

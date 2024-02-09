@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SubSys;
+package org.firstinspires.ftc.teamcode.SubSys.CommandSubsys;
 
 import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
@@ -17,16 +17,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.CustomHardware.OwlMotor;
 
 public class Slides extends SubsystemBase {
-    OwlMotor leftSlide;
-    OwlMotor rightSlide;
+    DcMotorEx leftSlide;
+    DcMotorEx rightSlide;
     private static double Kp;
     private static double Ki;
     private static double Kd;
-    private static double integralSumMax;
-    private static double stability_thresh;
-    private static double lowPassGain;
-    private boolean pid = false;
-
     private static double target;
     private  static double Kf;
 
@@ -52,26 +47,18 @@ public class Slides extends SubsystemBase {
 
     public Slides(HardwareMap hardwareMap, Telemetry telemetry) {
         controller.setTolerance(20);
-        leftSlide = new OwlMotor(hardwareMap, telemetry, "ls", "Left Slide Motor",
-                DcMotor.RunMode.RUN_WITHOUT_ENCODER,
-                DcMotorSimple.Direction.REVERSE);
-        rightSlide = new OwlMotor(hardwareMap, telemetry, "rs", "Right Slide Motor",
-                DcMotor.RunMode.RUN_WITHOUT_ENCODER,
-                DcMotorSimple.Direction.FORWARD);
+        leftSlide = hardwareMap.get(DcMotorEx.class, "ls");
+        rightSlide = hardwareMap.get(DcMotorEx.class, "ls");
 
     }
 
     @Override
     public void periodic() {
-        currentLeft = leftSlide.returnDevice().getCurrentPosition();
-        currentRight = leftSlide.returnDevice().getCurrentPosition();
+        currentLeft = leftSlide.getCurrentPosition();
+        currentRight = leftSlide.getCurrentPosition();
 
-        leftSlide.returnDevice().setPower((controller.calculate(currentLeft, target)));
-        rightSlide.returnDevice().setPower((controller.calculate(currentRight, target)));
-
-
-
-
+        leftSlide.setPower((controller.calculate(currentLeft, target)));
+        rightSlide.setPower((controller.calculate(currentRight, target)));
     }
 
 
@@ -115,11 +102,11 @@ public class Slides extends SubsystemBase {
 
    */
 
-
+/*
 
     public boolean isJammed() {
         return rightSlide.currentOverThreshold() || leftSlide.currentOverThreshold();
     }
-
+*/
 }
 

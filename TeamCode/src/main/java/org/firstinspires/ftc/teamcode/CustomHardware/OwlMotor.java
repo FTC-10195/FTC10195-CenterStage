@@ -8,14 +8,20 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-public class OwlMotor extends OwlHardware {
+public class OwlMotor  {
 
     DcMotorEx motor;
 
     double threshold = 0;
 
+    Telemetry telemetry;
+
     public OwlMotor(HardwareMap hardwareMap, Telemetry telemetry, String config, String displayName, DcMotor.RunMode mode, DcMotorSimple.Direction direction) {
-        super(hardwareMap, telemetry, config, displayName, DcMotorEx.class);
+        this.telemetry = telemetry;
+        motor= hardwareMap.get(DcMotorEx.class, config);
+        motor.setMode(mode);
+        motor.setDirection(direction);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
@@ -24,7 +30,7 @@ public class OwlMotor extends OwlHardware {
         this.threshold = threshold;
     }
 
-    @Override
+
     public DcMotorEx returnDevice() {
         return motor;
     }
@@ -32,7 +38,7 @@ public class OwlMotor extends OwlHardware {
         return returnDevice().getCurrent(CurrentUnit.AMPS) > threshold;
     }
 
-    @Override
+
     public void telemetry() {
         telemetry.addData("Current current", returnDevice().getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Current power", returnDevice().getPower());

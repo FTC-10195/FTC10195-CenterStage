@@ -5,10 +5,9 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
 
 @TeleOp(group = "Match")
 @Config

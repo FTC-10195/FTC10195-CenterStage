@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.SubSys.Arm;
 import org.firstinspires.ftc.teamcode.SubSys.Chamber;
 import org.firstinspires.ftc.teamcode.SubSys.DropDown;
-import org.firstinspires.ftc.teamcode.SubSys.MecanumDrive;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSys.SimpleBucket;
-import org.firstinspires.ftc.teamcode.SubSys.Slides;
+import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.Slides;
 
 @TeleOp(group = "Matches")
 @Config
