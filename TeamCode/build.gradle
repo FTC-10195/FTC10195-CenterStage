@@ -12,9 +12,9 @@ buildscript {
 
 repositories {
     mavenCentral()
+    maven { url = 'https://jitpack.io' }
     maven {
         url = 'https://www.matthewo.tech/maven/'
-
     }
 }
     dependencies {
@@ -57,6 +57,7 @@ dependencies {
     implementation 'org.ftclib.ftclib:core:2.0.1' // core
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.0-ALPHA'
     implementation 'org.team11260:fast-load:0.1.2'
+
 
 
 }

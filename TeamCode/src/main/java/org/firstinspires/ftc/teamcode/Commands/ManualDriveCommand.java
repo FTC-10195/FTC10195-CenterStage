@@ -7,14 +7,14 @@ import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
 import java.util.function.DoubleSupplier;
 
 
-public class DriveCommand extends CommandBase {
+public class ManualDriveCommand extends CommandBase {
 
     private final MecanumDrive drive;
     private DoubleSupplier forward;
     private  DoubleSupplier rotate;
     private  DoubleSupplier strafe;
 
-    public DriveCommand(MecanumDrive drive, DoubleSupplier forward, DoubleSupplier rotate, DoubleSupplier strafe) {
+    public ManualDriveCommand(MecanumDrive drive, DoubleSupplier forward, DoubleSupplier rotate, DoubleSupplier strafe) {
         this.drive = drive;
         this.forward = forward;
         this.rotate = rotate;
@@ -26,8 +26,8 @@ public class DriveCommand extends CommandBase {
     public void execute() {
         drive.robotDrive(
                 -forward.getAsDouble(),
-                strafe.getAsDouble(),
-                rotate.getAsDouble()
+                -strafe.getAsDouble(),
+                -rotate.getAsDouble()
         );
     }
 }

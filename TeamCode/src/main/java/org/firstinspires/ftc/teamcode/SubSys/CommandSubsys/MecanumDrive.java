@@ -22,10 +22,7 @@ public class MecanumDrive extends SubsystemBase {
         frontRightMotor = hwmap.get(DcMotorEx.class, "fr");
         backLeftMotor = hwmap.get(DcMotorEx.class, "bl");
         backRightMotor = hwmap.get(DcMotorEx.class, "br");
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-//        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-//        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

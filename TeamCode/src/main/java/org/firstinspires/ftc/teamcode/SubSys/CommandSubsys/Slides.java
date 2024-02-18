@@ -4,6 +4,7 @@ import android.transition.Slide;
 
 import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.PIDEx;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.CustomHardware.OwlMotor;
 
+@Config
 public class Slides extends SubsystemBase {
     DcMotorEx leftSlide;
     DcMotorEx rightSlide;
@@ -30,6 +32,7 @@ public class Slides extends SubsystemBase {
     // usage of the PID
     PIDFController controller = new PIDFController(Kp, Ki, Kd, Kf);
 
+    Telemetry telemetry;
     private final double MINIMUM_POS = 20;
     private final double INTAKEPOS = 30;
     private final double LINE1 = 2500;
@@ -54,12 +57,13 @@ public class Slides extends SubsystemBase {
 
     public Slides(HardwareMap hardwareMap, Telemetry telemetry) {
         controller.setTolerance(20);
+        this.telemetry = telemetry;
         leftSlide = hardwareMap.get(DcMotorEx.class, "ls");
-        rightSlide = hardwareMap.get(DcMotorEx.class, "ls");
-
+        rightSlide = hardwareMap.get(DcMotorEx.class, "rs");
+    leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    @Override
+ /*   @Override
     public void periodic() {
         currentLeft = leftSlide.getCurrentPosition();
         currentRight = leftSlide.getCurrentPosition();
@@ -71,7 +75,7 @@ public class Slides extends SubsystemBase {
 
     }
 
-
+*/
     /***
      *
      * @param state
@@ -108,7 +112,7 @@ public class Slides extends SubsystemBase {
     }
    public void goDown() {
         leftSlide.setPower(-1);
-        rightSlide.setPower(1);
+        rightSlide.setPower(-1);
    }
 
    public void goUp() {
@@ -119,6 +123,32 @@ public class Slides extends SubsystemBase {
    public void stopMoving() {
         leftSlide.setPower(0);
         rightSlide.setPower(0);
+   }
+
+
+   public void manualControl(boolean up, boolean down) {
+       if (up) {
+           //   if (rightSlide.getCurrentPosition() < 2600) {
+           rightSlide.setPower(1);
+           //    } else if (rightSlide.getCurrentPosition() > 2600) {
+           leftSlide.setPower(1);
+           //   }
+           //    if (leftSlide.getCurrentPosition() < 2150) {
+           //  leftSlide.setPower(1);
+       }
+       //  else if (leftSlide.getCurrentPosition() > 2150) {
+
+       else if (down) {
+           rightSlide.setPower(-1);
+           leftSlide.setPower(-1);
+
+       } else {
+           rightSlide.setPower(0);
+           leftSlide.setPower(0);
+       }
+
+       telemetry.addData("Left", leftSlide.getCurrentPosition());
+       telemetry.addData("Right", rightSlide.getCurrentPosition());
    }
 
 /*
