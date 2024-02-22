@@ -39,10 +39,10 @@ public class MecanumDrive extends SubsystemBase {
 
         //denominator is largest motor power to ensure power ratio between motors is mantained
         double denominator = Math.max(Math.abs(left_stick_y) + Math.abs(left_stick_x) + Math.abs(right_stick_x), 1);
-        double frontLeftPower = (left_stick_y + left_stick_x + right_stick_x) / denominator;
-        double backLeftPower = (left_stick_y - left_stick_x + right_stick_x) / denominator;
-        double frontRightPower = (left_stick_y - left_stick_x - right_stick_x) / denominator;
-        double backRightPower = (left_stick_y + left_stick_x - right_stick_x) / denominator;
+        double frontLeftPower = (-left_stick_y + left_stick_x + right_stick_x) / denominator;
+        double backLeftPower = (-left_stick_y - left_stick_x + right_stick_x) / denominator;
+        double frontRightPower = (-left_stick_y - left_stick_x - right_stick_x) / denominator;
+        double backRightPower = (-left_stick_y + left_stick_x - right_stick_x) / denominator;
 
         //set motor power values
         frontLeftMotor.setPower(frontLeftPower); // This is oriented by looking straight on at the robot, so this would be the wheel closest to the slides on the control hub side
@@ -50,6 +50,10 @@ public class MecanumDrive extends SubsystemBase {
         frontRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);
 
+
+    }
+
+    public void rotate(int angle) {
 
     }
     /*
