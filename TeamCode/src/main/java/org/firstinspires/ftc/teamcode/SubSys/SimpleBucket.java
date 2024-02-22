@@ -9,22 +9,34 @@ public class SimpleBucket implements Subsystem {
     Servo lowerServo;
     Servo upperServo;
 
-    double lowerIn = 0;
-    double lowerOut = .3;
 
-    double upperIn = 0;
-    double upperOut = .2;
+    //lower out makes it so that the thing is outside of the hole, lower in makes it inside of the hole
+
+    double lowerOut = 0;
+    double lowerIn = .7;
+
+    double upperOut = 0;
+    double upperIn = .7;
+
+
 
     public SimpleBucket(HardwareMap hardwareMap) {
         lowerServo = hardwareMap.get(Servo.class, "lserv");
         upperServo = hardwareMap.get(Servo.class, "userv");
+        upperServo.setDirection(Servo.Direction.REVERSE);
+
     }
+
+
 
 
     public void intakeMode() {
        lowerServo.setPosition(lowerOut);
         upperServo.setPosition(upperOut);
     }
+
+
+
 
     public void manualMove(double pos) {
         lowerServo.setPosition(pos);

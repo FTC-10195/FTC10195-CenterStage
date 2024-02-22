@@ -23,4 +23,8 @@ public class Arm implements Subsystem {
         right.setPosition(position);
     }
 
+    public void intake() {
+     //   left.setPosition();
+    }
+
 }

@@ -22,13 +22,13 @@ public class DropDown implements Subsystem {
 
     public DropDown(HardwareMap hwmap) {
         drop = hwmap.get(DcMotorEx.class, "spin");
-        left = hwmap.get(Servo.class, "ld");
-        right = hwmap.get(Servo.class, "rd");
-        left.setDirection(Servo.Direction.REVERSE);
+       // left = hwmap.get(Servo.class, "ld");
+       // right = hwmap.get(Servo.class, "rd");
+    //    left.setDirection(Servo.Direction.REVERSE);
         drop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         drop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drop.setDirection(DcMotorSimple.Direction.REVERSE);
-        move(down);
+      //  move(down);
     }
 
     private void move(double pos) {

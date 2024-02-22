@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.SubSys.Arm;
 import org.firstinspires.ftc.teamcode.SubSys.CommandSubsys.MecanumDrive;
@@ -13,19 +15,24 @@ import org.firstinspires.ftc.teamcode.SubSys.DropDown;
 import org.firstinspires.ftc.teamcode.SubSys.SimpleBucket;
 
 @TeleOp
+@Config
+
 public class uncg extends LinearOpMode {
 
     public static double armPos = 0;
+    public static double dropPos = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
         DcMotorEx frontLeftMotor = hardwareMap.get(DcMotorEx.class, "fl");
         DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class, "fr");
         DcMotorEx backLeftMotor = hardwareMap.get(DcMotorEx.class, "bl");
         DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class, "br");
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -34,16 +41,16 @@ public class uncg extends LinearOpMode {
 
 
         DcMotorEx leftSlide = hardwareMap.get(DcMotorEx.class, "ls");
-        DcMotorEx rightSlide = hardwareMap.get(DcMotorEx.class, "ls");
+        DcMotorEx rightSlide = hardwareMap.get(DcMotorEx.class, "rs");
 
 
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
+            Servo dropdrown = hardwareMap.get(Servo.class, "drop");
         Arm arm = new Arm(hardwareMap);
-
+        dropdrown.setDirection(Servo.Direction.REVERSE);
         SimpleBucket bucket = new SimpleBucket(hardwareMap);
 
         DropDown intake = new DropDown(hardwareMap);
@@ -62,6 +69,8 @@ public class uncg extends LinearOpMode {
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+
+            intake.spin(gamepad1.a, gamepad1.b, gamepad1.y);
 
             if (gamepad1.dpad_up) {
                 //   if (rightSlide.getCurrentPosition() < 2600) {
@@ -83,16 +92,35 @@ public class uncg extends LinearOpMode {
                 leftSlide.setPower(0);
             }
 
+            if(gamepad1.dpad_left) {
+                armPos = .6;
+            } else if (gamepad1.dpad_right) {
+                armPos = 0;
+            }
+
             arm.rotate(armPos);
 
-            if(gamepad1.dpad_right) {
+            if(gamepad1.right_stick_button) {
                 bucket.intakeMode();
             }
-            else if(gamepad1.dpad_left) {
-                bucket.manualMove(.4);
+            else if(gamepad1.left_stick_button) {
+                bucket.outtakeLower();
+                bucket.outtakeUpper();
             }
 
 
+            if(gamepad1.left_bumper) {
+                dropPos = 0;
+            }
+            else if (gamepad1.right_bumper) {
+                dropPos = 1;
+            }
+
+            dropdrown.setPosition(dropPos);
+          //  bucket.manualMove(armPos);
+            telemetry.addData("Left slide", leftSlide.getCurrentPosition());
+            telemetry.addData("Right slide", rightSlide.getCurrentPosition());
+            telemetry.update();
         }
     }
 
