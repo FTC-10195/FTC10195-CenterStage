@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSys.CommandSubsys;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,6 +18,8 @@ public class MecanumDrive extends SubsystemBase {
         DcMotorEx backLeftMotor;
         DcMotorEx backRightMotor;
         Telemetry telemetry;
+
+        private double slowFactor;
     
     public MecanumDrive(HardwareMap hwmap, Telemetry telemetry) {
         frontLeftMotor = hwmap.get(DcMotorEx.class, "fl");
@@ -29,10 +33,20 @@ public class MecanumDrive extends SubsystemBase {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        this.telemetry = telemetry;
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
-    public void robotDrive(double left_stick_y, double left_stick_x, double right_stick_x) {
+
+
+    public void robotDrive(double left_stick_y, double left_stick_x, double right_stick_x, boolean slow) {
+        slowFactor = 1;
+        if(slow) {
+            slowFactor = 2;
+        }
+
+        else {
+            slowFactor= 1;
+        }
 
         //denominator is largest motor power to ensure power ratio between motors is mantained
         double denominator = Math.max(Math.abs(left_stick_y) + Math.abs(left_stick_x) + Math.abs(right_stick_x), 1);
@@ -42,12 +56,10 @@ public class MecanumDrive extends SubsystemBase {
         double backRightPower = (left_stick_y + left_stick_x - right_stick_x) / denominator;
 
         //set motor power values
-        frontLeftMotor.setPower(frontLeftPower); // This is oriented by looking straight on at the robot, so this would be the wheel closest to the slides on the control hub side
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
-
-
+        frontLeftMotor.setPower(frontLeftPower/slowFactor); // This is oriented by looking straight on at the robot, so this would be the wheel closest to the slides on the control hub side
+        backLeftMotor.setPower(backLeftPower/slowFactor);
+        frontRightMotor.setPower(frontRightPower/slowFactor);
+        backRightMotor.setPower(backRightPower/slowFactor);
     }
     /*
     public boolean isSystemJammed() {

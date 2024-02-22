@@ -7,6 +7,7 @@ import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficientsEx;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -21,28 +23,32 @@ import org.firstinspires.ftc.teamcode.CustomHardware.OwlMotor;
 
 @Config
 public class Slides extends SubsystemBase {
+
+    /*
+    * Left might be right or left idr but this works so
+     */
     DcMotorEx leftSlide;
     DcMotorEx rightSlide;
-    private static double Kp;
-    private static double Ki;
-    private static double Kd;
-    private static double target;
-    private  static double Kf;
+    private double Kp;
+    private double Ki;
+    private double Kd;
+    private double target;
+    private double Kf;
 
-    // usage of the PID
-    PIDFController controller = new PIDFController(Kp, Ki, Kd, Kf);
+    //use one controller bc using two leads to jank behavior on the right (left?) motor
+    private PIDFController controller;
 
     Telemetry telemetry;
-    private final double MINIMUM_POS = 20;
+    private final double MINIMUM_POS = -10;
     private final double INTAKEPOS = 30;
-    private final double LINE1 = 2500;
-    private final double LINE2 = 4000;
-    private final double LINE3 = 6000;
-    private final double MAXIMUM = 6500;
+    private final double LINE1 = 1000;
+    private final double LINE2 = 1500;
+   // private final double LINE3 = 6000;
+    private final double MAXIMUM = 2000;
     public static double currentLeft;
-    public static double currentRight;
+  //  public static double currentRight;
 
-    enum SlideStates {
+    public enum SlideStates {
         MINIMUM,
         INTAKEPOS,
         LINE1,
@@ -56,26 +62,27 @@ public class Slides extends SubsystemBase {
     SlideStates state=  SlideStates.MINIMUM;
 
     public Slides(HardwareMap hardwareMap, Telemetry telemetry) {
-        controller.setTolerance(20);
+        controller = new PIDFController(Kp, Ki, Kd, Kf);
         this.telemetry = telemetry;
         leftSlide = hardwareMap.get(DcMotorEx.class, "ls");
         rightSlide = hardwareMap.get(DcMotorEx.class, "rs");
     leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
- /*   @Override
+   @Override
     public void periodic() {
         currentLeft = leftSlide.getCurrentPosition();
-        currentRight = leftSlide.getCurrentPosition();
-
-        if (state != SlideStates.MANUAL) {
-            leftSlide.setPower((controller.calculate(currentLeft, target)));
-            rightSlide.setPower((controller.calculate(currentRight, target)));
-        }
-
+        double pidPower = controller.calculate(currentLeft, target);
+        leftSlide.setPower(pidPower);
+        rightSlide.setPower(pidPower);
     }
 
-*/
+
+
     /***
      *
      * @param state
@@ -106,11 +113,14 @@ public class Slides extends SubsystemBase {
         }
     }
 
-    public double setManualTarget(boolean up, boolean down) {
 
+    /*
+    public double setManualTarget(boolean up, boolean down) {
         return target - 20;
     }
-   public void goDown() {
+
+     */
+ /*  public void goDown() {
         leftSlide.setPower(-1);
         rightSlide.setPower(-1);
    }
@@ -126,27 +136,15 @@ public class Slides extends SubsystemBase {
    }
 
 
-   public void manualControl(boolean up, boolean down) {
+  */
+
+   public void manualControl(boolean down, boolean up) {
        if (up) {
-           //   if (rightSlide.getCurrentPosition() < 2600) {
-           rightSlide.setPower(1);
-           //    } else if (rightSlide.getCurrentPosition() > 2600) {
-           leftSlide.setPower(1);
-           //   }
-           //    if (leftSlide.getCurrentPosition() < 2150) {
-           //  leftSlide.setPower(1);
+           target += 20;
        }
-       //  else if (leftSlide.getCurrentPosition() > 2150) {
-
        else if (down) {
-           rightSlide.setPower(-1);
-           leftSlide.setPower(-1);
-
-       } else {
-           rightSlide.setPower(0);
-           leftSlide.setPower(0);
+           target -= 20;
        }
-
        telemetry.addData("Left", leftSlide.getCurrentPosition());
        telemetry.addData("Right", rightSlide.getCurrentPosition());
    }

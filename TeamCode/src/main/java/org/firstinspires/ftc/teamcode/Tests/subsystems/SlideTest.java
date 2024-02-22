@@ -14,7 +14,12 @@ public class SlideTest extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
-            slide.manualControl(gamepad1.dpad_up, gamepad1.dpad_down);
+
+            slide.manualControl(gamepad1.left_trigger > .05, gamepad1.right_trigger > .05);
+
+            if(gamepad1.dpad_down) {
+                slide.setTarget(Slides.SlideStates.MINIMUM);
+            }
             telemetry.update();
         }
     }

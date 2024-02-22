@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.SubSys.SimpleBucket;
 
 @TeleOp
 @Config
+
 public class uncg extends LinearOpMode {
 
     public static double armPos = 0;
