@@ -8,7 +8,25 @@
 // please think carefully as to whether such customizations are really necessary
 // before doing so.
 
+<<<<<<< HEAD
 // Custom definitions may go here
+=======
+buildscript {
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+    maven {
+        url = 'https://www.matthewo.tech/maven/'
+    }
+}
+    dependencies {
+        classpath 'org.team11260:fast-load-plugin:0.1.2'
+
+    }
+}
+
+>>>>>>> parent of 00aa9b3 (Merge remote-tracking branch 'origin/Merged' into OwlImplementation)
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
@@ -28,12 +46,17 @@ repositories {
     maven {
         url = 'https://www.matthewo.tech/maven/'
     }
+<<<<<<< HEAD
 
     maven {
         url = 'https://maven.brott.dev/'
     }
 }
+=======
+>>>>>>> parent of 00aa9b3 (Merge remote-tracking branch 'origin/Merged' into OwlImplementation)
 
+
+}
 dependencies {
 
     implementation project(':FtcRobotController')
@@ -48,6 +71,5 @@ dependencies {
     implementation 'org.team11260:fast-load:0.1.2'
 
 
-    implementation "com.acmerobotics.roadrunner:ftc:0.1.13"
-    implementation "com.acmerobotics.dashboard:dashboard:0.4.14"
+
 }
