@@ -24,6 +24,8 @@ repositories {
 }
 
 
+// Custom definitions may go here
+
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
@@ -43,9 +45,12 @@ repositories {
     maven {
         url = 'https://www.matthewo.tech/maven/'
     }
-
-
+    
+    maven {
+        url = 'https://maven.brott.dev/'
+    }
 }
+
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
@@ -59,5 +64,6 @@ dependencies {
     implementation 'org.team11260:fast-load:0.1.2'
 
 
-
+    implementation "com.acmerobotics.roadrunner:ftc:0.1.13"
+    implementation "com.acmerobotics.dashboard:dashboard:0.4.14"
 }

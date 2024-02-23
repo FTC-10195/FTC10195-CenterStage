@@ -79,7 +79,7 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+eocvsim_workspace.json
 
 .DS_Store
-.idea
-eocvsim_workspace.json
+/.idea
