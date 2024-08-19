@@ -3,27 +3,14 @@ package org.firstinspires.ftc.teamcode.Vision;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.provider.ContactsContract;
 
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
-import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvPipeline;
-
-import java.util.Collections;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LocationID implements VisionProcessor {
 
@@ -49,17 +36,17 @@ public class LocationID implements VisionProcessor {
 
         if ((satRectLeft > satRectMiddle) && (satRectLeft > satRectRight)) {
             return Selected.LEFT;
-            } else if ((satRectMiddle > satRectLeft) && (satRectMiddle > satRectRight)) {
+        } else if ((satRectMiddle > satRectLeft) && (satRectMiddle > satRectRight)) {
             return Selected.MIDDLE;
-            }
-        return Selected.RIGHT;
         }
+        return Selected.RIGHT;
+    }
 
-        protected double getAvgSaturation(Mat input, Rect rect) {
-            submat = input.submat(rect);
-            Scalar color = Core.mean(submat);
-            return color.val[1];
-            }
+    protected double getAvgSaturation(Mat input, Rect rect) {
+        submat = input.submat(rect);
+        Scalar color = Core.mean(submat);
+        return color.val[1];
+    }
 
     private android.graphics.Rect makeGraphicsRect(Rect rect, float scaleBmpPxToCanvasPx) {
         int left = Math.round(rect.x * scaleBmpPxToCanvasPx);
@@ -71,8 +58,7 @@ public class LocationID implements VisionProcessor {
     }
 
     @Override
-    public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext)
-    {
+    public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {
         Paint selectedPaint = new Paint();
         selectedPaint.setColor(Color.RED);
         selectedPaint.setStyle(Paint.Style.STROKE);
@@ -107,8 +93,8 @@ public class LocationID implements VisionProcessor {
                 canvas.drawRect(drawRectangleMiddle, nonSelectedPaint);
                 canvas.drawRect(drawRectangleRight, nonSelectedPaint);
                 break;
-            }
         }
+    }
 
     public Selected getSelection() {
         return selection;
